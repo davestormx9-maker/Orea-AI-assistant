@@ -1,0 +1,25 @@
+body{
+    background-image: url(dramatic-scenery-3840x2160-20802.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position-x: center;
+    background-position-y: center;
+    backface-visibility: visible;
+}  
+#b1{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: xx-large;
+    font-weight: bold;
+    color: aliceblue;
+    font-style: normal;
+    font-display: auto;
+    font-variant: normal;
+}
+h1{
+    color: rgb(45, 160, 125);
+}
+#Home{
+    color: rgb(27, 177, 177);
+}
