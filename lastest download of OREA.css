@@ -6,13 +6,14 @@ body{
     background-attachment:fixed;
 }  
 #b1{
-    font-family: Roboto;
+    font-family: "Roboto", sans-serif;
     font-size: medium;
     font-weight: bold;
     color: aliceblue;
     font-style: normal;
     font-display: auto;
     font-variant: normal;
+    font-optical-sizing: auto;
 }
 h1{
     color: rgb(45, 160, 125);
