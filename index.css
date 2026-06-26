@@ -15,13 +15,14 @@ body{
     color: rgb(27, 177, 177);
 }
 #b1{
-    font-family: roboto;
+    font-family: "roboto", sans-serif;
     font-size: medium;
     font-weight: bold;
     font-style: normal;
     font-display: auto;
     font-variant: normal;
     color: aliceblue;
+    font-optical-sizing: auto;
 }
 #h1{
     color: rgb(45, 160, 125);
