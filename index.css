@@ -3,6 +3,7 @@ body{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
+    background-attacment: fixed;
 }
 #a1{
     color: rgb(27, 177, 177);
