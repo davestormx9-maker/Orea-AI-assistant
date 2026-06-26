@@ -6,7 +6,6 @@ body{
     background-attachment: fixed;
     background-position-x: center;
     background-position-y: center;
-    backface-visibility: visible;
 }
 #a1{
     color: rgb(27, 177, 177);
