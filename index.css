@@ -3,7 +3,10 @@ body{
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-attacment: fixed;
+    background-attachment: fixed;
+    background-position-x: center;
+    background-position-y: center;
+    backface-visibility: visible;
 }
 #a1{
     color: rgb(27, 177, 177);
@@ -15,13 +18,14 @@ body{
     color: rgb(27, 177, 177);
 }
 #b1{
-    font-family: "roboto", sans-serif;
+    font-family: "Roboto", sans-serif;
     font-size: medium;
     font-weight: bold;
     font-style: normal;
     font-display: auto;
     font-variant: normal;
     color: aliceblue;
+    font-variation-settings: "wdth" 100;
     font-optical-sizing: auto;
 }
 #h1{
