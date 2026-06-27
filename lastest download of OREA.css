@@ -28,4 +28,7 @@ h1{
 .box{
     backdrop-filter:blur (4px);
     background: transparent;
+    position: relative;
+    width: auto;
+    height: auto;
 }
