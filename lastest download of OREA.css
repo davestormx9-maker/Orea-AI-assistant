@@ -26,5 +26,6 @@ h1{
     color: rgb(27, 177, 177);
 }
 .box{
-    backdrop-filter:blur (4px);
+    backdrop-filter:blur (4);
+    background: transparent;
 }
