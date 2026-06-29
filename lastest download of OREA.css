@@ -4,14 +4,16 @@ body{
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position-x: center;
+    background-blend-mode: darken;
+    backdrop-filter:blur(2px);
+     background-position-x: center;
     background-position-y: center;
     backface-visibility: visible;
 }  
 #b1{
     font-family: "Roboto", sans-serif;
     font-size: medium;
-    font-weight: bold;
+    font-weight: 700;
     color: aliceblue;
     font-style: normal;
     font-display: auto;
@@ -24,11 +26,4 @@ h1{
 }
 #Home{
     color: rgb(27, 177, 177);
-}
-.box{
-    backdrop-filter:blur;
-    background: transparent;
-    position: relative;
-    width: auto;
-    height: auto;
 }
