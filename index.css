@@ -2,7 +2,7 @@ body{
     background-image: url(dramatic-scenery-3840x2160-20802.jpg);
     background-size: cover;
     background-position: center;
-    background-repeat: no-repet;
+    background-repeat: no-repeat;
     background-attachment: fixed;
     background-blend-mode: darken;
     backdrop-filter:blur(2px);
