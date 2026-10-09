@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OREA AI — Your Intelligent Companion</title>
+    <script src="script.js" defer></script>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg: #080910;
+    --panel: #10111d;
+    --border: rgba(255,255,255,0.09);
+    --purple: #9b72ff;
+    --blue: #5c9dff;
+    --text: #f4f2ff;
+    --muted: #9697ac;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(130px);
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.glow.one {
+    background: #853dff;
+    top: -180px;
+    left: 25%;
+}
+
+.glow.two {
+    background: #176dff;
+    bottom: -220px;
+    right: -100px;
+}
+
+/* Navigation */
+
+.sidebar {
+    width: 255px;
+    position: fixed;
+    inset: 0 auto 0 0;
+    padding: 28px 18px;
+    background: rgba(12,13,23,0.94);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+    transition: transform .3s ease;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px;
+    margin-bottom: 38px;
+}
+
+.logo-icon {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #a77aff, #567dff);
+    font-size: 22px;
+    box-shadow: 0 0 25px #8256ff44;
+}
+
+.logo-name {
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.logo-name span {
+    color: var(--purple);
+}
+
+.new-chat {
+    padding: 14px;
+    border: 1px solid #8b65ff66;
+    background: linear-gradient(110deg, #8b5cf622, #5488ff11);
+    border-radius: 12px;
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+
+.new-chat:hover {
+    background: #8b5cf633;
+}
+
+.section-label {
+    color: #777990;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+
+.nav-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 10px;
+    color: #aaaabd;
+    font-size: 13px;
+    border-radius: 9px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.nav-item:hover, .nav-item.active {
+    background: #ffffff09;
+    color: white;
+}
+
+.nav-item.active {
+    border-left: 2px solid var(--purple);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.plan-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 15px;
+    background: #ffffff04;
+}
+
+.plan-card strong {
+    font-size: 13px;
+}
+
+.plan-card p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+    margin: 8px 0 12px;
+}
+
+.plan-card button {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    background: linear-gradient(110deg, #8b5cf6, #587dff);
+}
+
+/* Main layout */
+
+.main {
+    margin-left: 255px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    height: 76px;
+    padding: 0 35px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #08091055;
+    backdrop-filter: blur(15px);
+}
+
+.model {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status {
+    color: #70e6a1;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.status::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #70e6a1;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.top-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.top-actions button, .menu-button {
+    background: #ffffff07;
+    border: 1px solid var(--border);
+    color: #d7d5e9;
+    border-radius: 9px;
+    padding: 10px 13px;
+    font-size: 12px;
+}
+
+.menu-button {
+    display: none;
+}
+
+.content {
+    width: min(900px, 100%);
+    margin: 0 auto;
+    padding: 40px 35px 20px;
+    flex: 1;
+}
+
+/* Welcome section */
+
+.welcome {
+    text-align: center;
+    padding: 30px 0 35px;
+}
+
+.orb {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto 28px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    border-radius: 32px;
+    background: linear-gradient(145deg, #9d71ff, #426df4 80%);
+    box-shadow: 0 0 70px #7650ff33, inset 0 1px 1px #ffffff88;
+    animation: float 4s ease-in-out infinite;
+}
+
+.orb::before {
+    content: "";
+    position: absolute;
+    inset: -9px;
+    border: 1px solid #9a76ff55;
+    border-radius: 38px;
+}
+
+.orb span {
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 0 30px #ffffff77;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+}
+
+.eyebrow {
+    color: #ae8cff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: clamp(31px, 5vw, 48px);
+    letter-spacing: -2px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #bd9aff, #7ca9ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    max-width: 490px;
+    margin: auto;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--muted);
+}
+
+/* Suggested prompts */
+
+.suggestions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 10px 0 28px;
+}
+
+.suggestion {
+    background: linear-gradient(130deg, #ffffff07, #ffffff02);
+    border: 1px solid var(--border);
+    padding: 17px;
+    text-align: left;
+    border-radius: 13px;
+    color: white;
+    transition: .2s;
+}
+
+.suggestion:hover {
+    transform: translateY(-3px);
+    border-color: #9873ff77;
+    background: #8b5cf611;
+}
+
+.suggestion .icon {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.suggestion strong {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.suggestion small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* Chat */
+
+.chat {
+    display: none;
+    flex-direction: column;
+    gap: 22px;
+    margin: 25px 0;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #9d71ff, #426df4);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.bubble {
+    max-width: 85%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    background: #ffffff07;
+    border-radius: 4px 13px 13px 13px;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #deddec;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.user .bubble {
+    background: #7650ff19;
+    border-color: #9873ff33;
+    border-radius: 13px 4px 13px 13px;
+}
+
+.typing {
+    color: #aaa0cc;
+    font-size: 12px;
+}
+
+/* Composer */
+
+.composer-wrap {
+    position: sticky;
+    bottom: 0;
+    padding: 15px 0 18px;
+    background: linear-gradient(0deg, var(--bg) 78%, transparent);
+}
+
+.composer {
+    border: 1px solid #ffffff19;
+    border-radius: 17px;
+    background: #131420;
+    padding: 14px;
+    box-shadow: 0 12px 50px #0003;
+    transition: border .2s;
+}
+
+.composer:focus-within {
+    border-color: #9774ff88;
+}
+
+.composer textarea {
+    width: 100%;
+    min-height: 45px;
+    max-height: 160px;
+    resize: vertical;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 5px 3px 12px;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.composer textarea::placeholder {
+    color: #777990;
+}
+
+.composer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.composer-hint {
+    color: #73758c;
+    font-size: 10px;
+}
+
+.send-btn {
+    width: 39px;
+    height: 39px;
+    border: 0;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #a477ff, #587fff);
+    color: white;
+    font-size: 19px;
+    box-shadow: 0 0 20px #8256ff22;
+}
+
+.send-btn:hover {
+    filter: brightness(1.2);
+}
+
+.footer {
+    text-align: center;
+    color: #686a80;
+    font-size: 10px;
+    padding: 8px 0 0;
+}
+
+/* Responsive */
+
+@media(max-width: 760px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 20px 0 70px #0008;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .topbar {
+        height: 65px;
+        padding: 0 16px;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .top-actions button:first-child {
+        display: none;
+    }
+
+    .content {
+        padding: 25px 17px 12px;
+    }
+
+    .welcome {
+        padding-top: 30px;
+    }
+
+    .orb {
+        width: 85px;
+        height: 85px;
+        border-radius: 26px;
+    }
+
+    .orb span {
+        font-size: 39px;
+    }
+
+    .suggestions {
+        gap: 9px;
+    }
+
+    .suggestion {
+        padding: 13px;
+    }
+
+    .suggestion strong {
+        font-size: 11px;
+    }
+
+    .suggestion small {
+        font-size: 10px;
+    }
+
+    .composer-hint {
+        max-width: 210px;
+        line-height: 1.6;
+    }
+}
+
+@media(max-width: 380px) {
+    .suggestions {
+        grid-template-columns: 1fr;
+    }
+
+    .model {
+        font-size: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<!-- Sidebar -->
+
+<aside class="sidebar" id="sidebar">
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+        <div class="logo-name">OREA<span>.</span></div>
+    </div>
+
+    <button class="new-chat" onclick="newChat()">
+        ＋ &nbsp; New conversation
+    </button>
+
+    <div class="section-label">WORKSPACE</div>
+
+    <div class="nav-item active" onclick="newChat()">✧ &nbsp; AI Assistant</div>
+    <div class="nav-item" onclick="showFeature('Creative Studio', 'Create ideas, stories, designs and original concepts with OREA.')">◈ &nbsp; Creative Studio</div>
+    <div class="nav-item" onclick="showFeature('Code Assistant', 'Get help understanding code, solving programming problems and building projects.')">⌘ &nbsp; Code Assistant</div>
+    <div class="nav-item" onclick="showFeature('Study Mode', 'Explore subjects, simplify difficult concepts and practise for your next test.')">▤ &nbsp; Study Mode</div>
+
+    <div class="section-label" style="margin-top:32px">YOUR SPACE</div>
+
+    <div class="nav-item" onclick="showHistory()">◷ &nbsp; Recent chats</div>
+    <div class="nav-item" onclick="showFeature('Settings', 'OREA settings will be available here when account features are connected.')">⚙ &nbsp; Settings</div>
+
+    <div class="sidebar-bottom">
+        <div class="plan-card">
+            <strong>✦ Meet your new AI</strong>
+            <p>Ideas, answers and possibilities. All in one place.</p>
+            <button onclick="showFeature('OREA Pro', 'This is a demo upgrade screen. Connect a real payment and account system to offer paid plans.')">Explore OREA</button>
+        </div>
+    </div>
+</aside>
+
+<!-- Main application -->
+
+<main class="main">
+
+    <header class="topbar">
+        <div style="display:flex;align-items:center;gap:12px">
+            <button class="menu-button" onclick="toggleSidebar()">☰</button>
+            <div class="model">
+                <span>✦ OREA Intelligence</span>
+                <span class="status">Ready</span>
+            </div>
+        </div>
+
+        <div class="top-actions">
+            <button onclick="showFeature('About OREA', 'OREA is your intelligent digital companion for learning, creativity and productivity.')">About OREA</button>
+            <button onclick="newChat()">＋ New chat</button>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <section class="welcome" id="welcome">
+            <div class="orb"><span>O</span></div>
+
+            <div class="eyebrow">YOUR WORLD. YOUR INTELLIGENCE.</div>
+
+            <h1>
+                Think bigger.<br>
+                <span class="gradient-text">Create with OREA.</span>
+            </h1>
+
+            <p class="subtitle">
+                Your ideas deserve more. Ask questions, explore possibilities,
+                write code, learn new things and turn imagination into action.
+            </p>
+        </section>
+
+        <section class="suggestions" id="suggestions">
+
+            <button class="suggestion" onclick="ask('Help me learn a difficult subject in a simple way.')">
+                <span class="icon">✧</span>
+                <strong>Learn something new</strong>
+                <small>Make difficult topics easy to understand.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Give me five creative ideas for a new project.')">
+                <span class="icon">◈</span>
+                <strong>Unlock creativity</strong>
+                <small>Discover fresh ideas and possibilities.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Help me build a modern website using HTML, CSS and JavaScript.')">
+                <span class="icon">⌘</span>
+                <strong>Build with code</strong>
+                <small>Turn your ideas into working projects.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Help me plan my goals and organise my week.')">
+                <span class="icon">◷</span>
+                <strong>Plan your next move</strong>
+                <small>Organise your goals and get things done.</small>
+            </button>
+
+        </section>
+
+        <section class="chat" id="chat" aria-live="polite"></section>
+
+        <div class="composer-wrap">
+            <div class="composer">
+                <textarea
+                    id="prompt"
+                    rows="1"
+                    placeholder="Ask OREA anything..."
+                    aria-label="Message OREA"
+                    onkeydown="handleKey(event)"
+                ></textarea>
+
+                <div class="composer-bottom">
+                    <span class="composer-hint">✦ Curiosity starts here. Press Enter to send.</span>
+                    <button class="send-btn" onclick="sendMessage()" aria-label="Send message">↑</button>
+                </div>
+            </div>
+
+            <div class="footer">
+                OREA AI can make mistakes. Verify important information.
+                <br><br>
+                © 2026 OREA AI · Built for curious minds.
+            </div>
+        </div>
+
+    </div>
+</main>
+
+
+</body>
+</html>
