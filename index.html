@@ -1,48 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<meta name="google-site-verification" content="_KA2mKLfw1iLJd_6BxFKNNtnyXfcgIhwcsHoa02thYo" />
-	<title>Orea AI assistant</title>
-	<link rel="stylesheet" href="index.css">
-	<link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" ref="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Nova | Modern Website</title>
+
+    <style>
+        /* GENERAL STYLES */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #0b1020;
+            color: #ffffff;
+            line-height: 1.6;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            cursor: pointer;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1150px;
+            margin: auto;
+        }
+
+        /* NAVIGATION */
+        header {
+            background: rgba(11, 16, 32, 0.96);
+            padding: 18px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #252c42;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 27px;
+            font-weight: bold;
+            color: #7c83ff;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: #d0d5e5;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #7c83ff;
+        }
+
+        .menu-button {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 27px;
+        }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-block;
+            background: #7c83ff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #6269e8;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #7c83ff;
+            margin-left: 10px;
+        }
+
+        .btn-outline:hover {
+            background: #7c83ff;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            align-items: center;
+            background:
+                radial-gradient(
+                    circle at 80% 30%,
+                    rgba(124, 131, 255, 0.16),
+                    transparent 40%
+                );
+        }
+
+        .hero-content {
+            max-width: 750px;
+            padding: 70px 0;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #1b2140;
+            color: #aab0ff;
+            padding: 7px 15px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .hero h1 {
+            font-size: clamp(38px, 7vw, 70px);
+            line-height: 1.1;
+            margin-bottom: 25px;
+        }
+
+        .highlight {
+            color: #7c83ff;
+        }
+
+        .hero p {
+            color: #b0b8ce;
+            font-size: 18px;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+
+        /* GENERAL SECTIONS */
+        section {
+            padding: 85px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .section-title p {
+            color: #aab2c8;
+        }
+
+        /* ABOUT */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .about-box {
+            background: #141b30;
+            border: 1px solid #28304a;
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .about-box h3 {
+            font-size: 25px;
+            margin-bottom: 15px;
+        }
+
+        .about-box p {
+            color: #b0b8ce;
+        }
+
+        .about-visual {
+            min-height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #292e62, #171d36);
+            font-size: 85px;
+        }
+
+        /* SERVICES */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .service-card {
+            background: #141b30;
+            border: 1px solid #28304a;
+            padding: 30px;
+            border-radius: 15px;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-7px);
+            border-color: #7c83ff;
+        }
+
+        .service-icon {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            margin-bottom: 12px;
+            font-size: 21px;
+        }
+
+        .service-card p {
+            color: #aab2c8;
+        }
+
+        /* CONTACT */
+        .contact-wrapper {
+            max-width: 650px;
+            margin: auto;
+            background: #141b30;
+            border: 1px solid #28304a;
+            border-radius: 16px;
+            padding: 30px;
+        }
+
+        .contact-wrapper input,
+        .contact-wrapper textarea {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 18px;
+            background: #0b1020;
+            color: white;
+            border: 1px solid #343c55;
+            border-radius: 8px;
+            font: inherit;
+        }
+
+        .contact-wrapper input:focus,
+        .contact-wrapper textarea:focus {
+            outline: 1px solid #7c83ff;
+        }
+
+        .contact-wrapper textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        .contact-wrapper .btn {
+            width: 100%;
+        }
+
+        #form-message {
+            margin-top: 15px;
+            color: #aab0ff;
+            text-align: center;
+        }
+
+        /* FOOTER */
+        footer {
+            border-top: 1px solid #252c42;
+            padding: 25px 0;
+            text-align: center;
+            color: #aab2c8;
+        }
+
+        /* MOBILE RESPONSIVENESS */
+        @media (max-width: 768px) {
+            .menu-button {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 72px;
+                left: 0;
+                width: 100%;
+                padding: 25px;
+                background: #11172b;
+                text-align: center;
+                gap: 20px;
+                border-bottom: 1px solid #28304a;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hero {
+                min-height: 75vh;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 29px;
+            }
+
+            .btn-outline {
+                margin-left: 0;
+                margin-top: 12px;
+            }
+        }
+
+        /* ANIMATION */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-content {
+            animation: fadeIn 1s ease;
+        }
+    </style>
 </head>
-<body id="b1">
-	<!--OREA AI made just for you-->
-	<section>
-	<h1 id="h1"><u><em>MEET OREA:YOUR INTELLIGENT AI COMPANION<em></u></h1>
-	<p>In a world moving faster than ever, <b>OREA</b> is the AI assistant that keeps up with you. Whether you're brainstorming ideas, managing your schedules, answering complex questions, or simply needing a smart sidekick for everyday tasks, our powerful AI is here to help-24/7, and always learning.</p>
-	<p>Built with cutting-edge artificial intelligence, <b>OREA</b> understands context, anticipates your needs, and delivers natural conversations that feel truly human. From students and professionals to creators and entrepreneurs, anyone can boost productivity, spark creativity, and simplify life with a personal AI that adapts to you.</p>
-	<h3>Key benenfits(by <em>OREA</em>)</h3>
-<ul>
-	<li>Lightning-fast & Accurate-Get reliable answers and insights in seconds.</li>
-	<li>Privacy-First-Your conversations stay yours.</li>
-	<li>Multi-purpose-Chat, plan, research, write, code and more.</li>
-	<li>Always available-Works seamlessly across web, mobile and voice.</li>
-</ul>
-	<p><b><em>Ready to experience the future of personal AI?<em></b></p>
-	<p>Try OREA for free-<a ID="a1" href="latest download of OREA.html" target="_self title="This take you to the next site"><em>Download OREA your AI assistant<em></a></p>
-	</section>
-	<section>
-	<h2>Customer suport & feedback</h2>
-	<p>We're here to help you get the most out of <b><em>OREA</em></b>.If you're experiencing any issue with the AI, have questions, or want to share feedback, our team is ready to assist.</p>
-	<h3>How to reach us</h3> 
-<ul>
-	<li>In-app support:The fastest way-just open the chat in <b><em>OREA</em></b> and type "help" or "support" our AI can guide you through common issues instantly.</li>
-	<li>Email:Send us a detailed message at <a id="a2" href="mailto:davidecorea16@gmail.com"><u>davidecorea16@gmail.com</u></a><br>(Respond time:Usually within 24 hours)</br></li>
-	<li>Feedback form:<a id="a3" href="mailto:davestormx9@gmail.com"><u>Submit feedback</u></a>-Your input helps us improve the AI every day.</li>
-</ul>
-	<h3>Common AI issues & Quick fixes</h3>
-<ol>
-	<li>AI gives wrong or unexpected answers<br>Try being more specific in your prompt. For examples:Instead of "Tell me about history",say "summarize the key events of world war II in 5 bullet points".</br></li>
-	<li><em>Slow responses or errors</em><br>Refresh the page/app or check your internet connection,We're constantly optimizing speed.
-	<li>AI doesn't understand context<br>Start a new chat or clearly remind the AI of previous details.</li>
-	<li>Features not working<br>Make sure you're using the latest version app.</br></li>
-</ol>
-<h3>We value your feedback</h3>
-	<p>Your thoughts matter. Whether it's a bug report, feature suggestion, or praise-we read every message.<br>Many of our best improvements came directly rom users like you.</br></p>
-	<p>Share your experience and help make <b><em>OREA</em></b> smarter and more helpful for everyone thanks for your unwavering support don't forget to give a review on all our platforms.</p>
-</section>
+
+<body>
+
+    <!-- NAVIGATION -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">NOVA.</a>
+
+                <button
+                    class="menu-button"
+                    id="menu-button"
+                    aria-label="Toggle navigation"
+                    aria-expanded="false"
+                    aria-controls="nav-links"
+                >
+                    ☰
+                </button>
+
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+
+                    <span class="badge">
+                        Welcome to the future
+                    </span>
+
+                    <h1>
+                        Build Something
+                        <span class="highlight">Amazing.</span>
+                    </h1>
+
+                    <p>
+                        Welcome to Nova, a modern digital experience
+                        designed to help you explore ideas, discover
+                        opportunities, and bring your vision to life.
+                    </p>
+
+                    <a href="#services" class="btn">
+                        Explore Services
+                    </a>
+
+                    <a href="#about" class="btn btn-outline">
+                        Learn More
+                    </a>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ABOUT SECTION -->
+        <section id="about">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>About Nova</h2>
+                    <p>Discover what makes us different.</p>
+                </div>
+
+                <div class="about-content">
+
+                    <div class="about-box">
+                        <h3>Ideas into Reality</h3>
+
+                        <p>
+                            We believe great ideas deserve great
+                            experiences. Nova represents creativity,
+                            simplicity, and innovation in the digital
+                            world.
+                        </p>
+
+                        <br>
+
+                        <p>
+                            Our goal is to make technology easier to
+                            explore and help people create something
+                            meaningful online.
+                        </p>
+                    </div>
+
+                    <div class="about-visual" aria-label="Creative idea">
+                        💡
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- SERVICES SECTION -->
+        <section id="services">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Our Services</h2>
+                    <p>Explore what we have to offer.</p>
+                </div>
+
+                <div class="services-grid">
+
+                    <article class="service-card">
+                        <div class="service-icon">💻</div>
+                        <h3>Web Development</h3>
+                        <p>
+                            Create modern, responsive websites
+                            that work across different devices.
+                        </p>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">🎨</div>
+                        <h3>Creative Design</h3>
+                        <p>
+                            Bring your ideas to life with attractive
+                            layouts and engaging digital experiences.
+                        </p>
+                    </article>
+
+                    <article class="service-card">
+                        <div class="service-icon">🚀</div>
+                        <h3>Digital Innovation</h3>
+                        <p>
+                            Explore new ideas and discover better
+                            ways to solve everyday problems.
+                        </p>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- CONTACT SECTION -->
+        <section id="contact">
+            <div class="container">
+
+                <div class="section-title">
+                    <h2>Contact Us</h2>
+                    <p>Have a question? Send us a message.</p>
+                </div>
+
+                <div class="contact-wrapper">
+
+                    <form id="contact-form">
+
+                        <label for="name">Your Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                        <label for="email">Your Email</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                        <label for="message">Your Message</label>
+                        <textarea
+                            id="message"
+                            name="message"
+                            placeholder="Write your message..."
+                            required
+                        ></textarea>
+
+                        <button type="submit" class="btn">
+                            Send Message
+                        </button>
+
+                        <p id="form-message" role="status"></p>
+
+                    </form>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>
+                &copy; <span id="year"></span> Nova.
+                All rights reserved.
+            </p>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Mobile navigation
+        const menuButton = document.getElementById("menu-button");
+        const navLinks = document.getElementById("nav-links");
+
+        menuButton.addEventListener("click", function () {
+            const isOpen = navLinks.classList.toggle("active");
+
+            menuButton.setAttribute("aria-expanded", isOpen);
+            menuButton.textContent = isOpen ? "✕" : "☰";
+        });
+
+        // Close the mobile menu after clicking a link
+        document.querySelectorAll(".nav-links a").forEach(function (link) {
+            link.addEventListener("click", function () {
+                navLinks.classList.remove("active");
+                menuButton.setAttribute("aria-expanded", "false");
+                menuButton.textContent = "☰";
+            });
+        });
+
+        // Automatically update the copyright year
+        document.getElementById("year").textContent =
+            new Date().getFullYear();
+
+        // Contact form demonstration
+        document.getElementById("contact-form").addEventListener(
+            "submit",
+            function (event) {
+                event.preventDefault();
+
+                const name = document.getElementById("name").value.trim();
+                const messageBox = document.getElementById("form-message");
+
+                if (!name) {
+                    messageBox.textContent = "Please enter your name.";
+                    return;
+                }
+
+                messageBox.textContent =
+                    "Thanks, " + name +
+                    "! The form works, but message delivery has not been configured.";
+
+                this.reset();
+            }
+        );
+    </script>
+
 </body>
-</html>
+							</html>
+							
