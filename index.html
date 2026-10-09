@@ -1,850 +1,852 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Orea AI — Your Intelligent Assistant</title>
-
-    <meta name="description"
-          content="Meet Orea AI, your intelligent assistant for learning, creativity, coding, and productivity.">
-
-    <style>
-        /* =========================
-           GLOBAL STYLES
-        ========================= */
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --background: #080812;
-            --surface: #11111f;
-            --primary: #9b5cff;
-            --secondary: #42d9ff;
-            --text: #ffffff;
-            --muted: #a5a5bd;
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: var(--background);
-            color: var(--text);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        a {
-            color: inherit;
-            text-decoration: none;
-        }
-
-        button,
-        input {
-            font: inherit;
-        }
-
-        .container {
-            width: min(1120px, 90%);
-            margin: auto;
-        }
-
-        .gradient-text {
-            background: linear-gradient(
-                90deg,
-                #b38aff,
-                #42d9ff
-            );
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .section-label {
-            color: var(--secondary);
-            font-size: 13px;
-            font-weight: bold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 12px;
-        }
-
-        .section-title {
-            font-size: clamp(30px, 5vw, 45px);
-            line-height: 1.2;
-            margin-bottom: 18px;
-        }
-
-        .section-description {
-            color: var(--muted);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* =========================
-           NAVIGATION
-        ========================= */
-
-        header {
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            background: rgba(8, 8, 18, 0.85);
-            backdrop-filter: blur(18px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        nav {
-            min-height: 75px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 25px;
-        }
-
-        .logo {
-            font-size: 25px;
-            font-weight: 800;
-            letter-spacing: -1px;
-        }
-
-        .logo span {
-            color: var(--primary);
-        }
-
-        .nav-links {
-            display: flex;
-            align-items: center;
-            gap: 28px;
-            list-style: none;
-        }
-
-        .nav-links a {
-            color: #c5c5d7;
-            font-size: 14px;
-            transition: 0.3s;
-        }
-
-        .nav-links a:hover {
-            color: var(--secondary);
-        }
-
-        .nav-button,
-        .primary-button {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 20px;
-            border-radius: 10px;
-            border: none;
-            background: linear-gradient(
-                110deg,
-                var(--primary),
-                #685cff
-            );
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .nav-button:hover,
-        .primary-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 30px rgba(155, 92, 255, 0.3);
-        }
-
-        .menu-button {
-            display: none;
-            background: transparent;
-            border: 1px solid var(--border);
-            color: white;
-            padding: 8px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-        }
-
-        /* =========================
-           HERO SECTION
-        ========================= */
-
-        .hero {
-            min-height: 690px;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-            padding: 90px 0;
-        }
-
-        .hero::before {
-            content: "";
-            position: absolute;
-            width: 550px;
-            height: 550px;
-            top: 40px;
-            right: -100px;
-            background: rgba(111, 59, 255, 0.16);
-            filter: blur(120px);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        .hero-grid {
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-            align-items: center;
-            gap: 55px;
-            position: relative;
-        }
-
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            padding: 8px 13px;
-            border: 1px solid rgba(155, 92, 255, 0.3);
-            background: rgba(155, 92, 255, 0.08);
-            color: #d7bfff;
-            border-radius: 50px;
-            font-size: 12px;
-            margin-bottom: 25px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #5dffb0;
-            box-shadow: 0 0 12px #5dffb0;
-        }
-
-        .hero h1 {
-            font-size: clamp(45px, 6vw, 72px);
-            line-height: 1.06;
-            letter-spacing: -3px;
-            margin-bottom: 25px;
-        }
-
-        .hero-description {
-            max-width: 540px;
-            color: var(--muted);
-            font-size: 17px;
-            margin-bottom: 30px;
-        }
-
-        .hero-buttons {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-        }
-
-        .secondary-button {
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            padding: 12px 20px;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            color: #e1e1ee;
-            transition: 0.3s;
-        }
-
-        .secondary-button:hover {
-            border-color: var(--primary);
-            background: rgba(155, 92, 255, 0.08);
-        }
-
-        .hero-note {
-            color: #85859c;
-            font-size: 12px;
-        }
-
-        /* =========================
-           AI VISUAL
-        ========================= */
-
-        .ai-visual {
-            min-height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .orbit {
-            width: 310px;
-            height: 310px;
-            border: 1px solid rgba(155, 92, 255, 0.35);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            animation: rotate 20s linear infinite;
-        }
-
-        .orbit::before,
-        .orbit::after {
-            content: "";
-            position: absolute;
-            border: 1px solid rgba(66, 217, 255, 0.18);
-            border-radius: 50%;
-        }
-
-        .orbit::before {
-            width: 240px;
-            height: 240px;
-        }
-
-        .orbit::after {
-            width: 380px;
-            height: 380px;
-        }
-
-        .ai-core {
-            width: 180px;
-            height: 180px;
-            border-radius: 50%;
-            background: radial-gradient(
-                circle at 30% 25%,
-                #c8a6ff,
-                #7950f2 40%,
-                #25205b 75%,
-                #0b0b1b
-            );
-            box-shadow:
-                0 0 50px rgba(155, 92, 255, 0.45),
-                inset 0 0 25px rgba(255, 255, 255, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 65px;
-            position: relative;
-            z-index: 2;
-            animation: float 4s ease-in-out infinite;
-        }
-
-        .floating-tag {
-            position: absolute;
-            padding: 10px 14px;
-            border: 1px solid var(--border);
-            background: rgba(17, 17, 31, 0.9);
-            border-radius: 10px;
-            font-size: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-        }
-
-        .tag-one {
-            top: 35px;
-            right: 0;
-        }
-
-        .tag-two {
-            bottom: 45px;
-            left: 0;
-        }
-
-        .tag-three {
-            bottom: 15px;
-            right: 15px;
-        }
-
-        @keyframes rotate {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-12px);
-            }
-        }
-
-        /* =========================
-           FEATURES
-        ========================= */
-
-        .features {
-            padding: 100px 0;
-            border-top: 1px solid var(--border);
-            background: linear-gradient(
-                180deg,
-                #0a0a17,
-                #080812
-            );
-        }
-
-        .section-heading {
-            text-align: center;
-            margin-bottom: 55px;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.025);
-            border: 1px solid var(--border);
-            padding: 30px;
-            border-radius: 18px;
-            transition: 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-7px);
-            border-color: rgba(155, 92, 255, 0.5);
-            background: rgba(155, 92, 255, 0.045);
-        }
-
-        .feature-icon {
-            width: 52px;
-            height: 52px;
-            display: grid;
-            place-items: center;
-            border-radius: 14px;
-            font-size: 25px;
-            margin-bottom: 22px;
-            background: rgba(155, 92, 255, 0.13);
-        }
-
-        .feature-card h3 {
-            font-size: 19px;
-            margin-bottom: 12px;
-        }
-
-        .feature-card p {
-            color: var(--muted);
-            font-size: 14px;
-        }
-
-        /* =========================
-           ABOUT
-        ========================= */
-
-        .about {
-            padding: 100px 0;
-        }
-
-        .about-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 70px;
-            align-items: center;
-        }
-
-        .about-text p {
-            color: var(--muted);
-            margin-bottom: 20px;
-        }
-
-        .check-list {
-            list-style: none;
-            margin-top: 25px;
-        }
-
-        .check-list li {
-            margin-bottom: 15px;
-            color: #d8d8e8;
-        }
-
-        .check-list li::before {
-            content: "✓";
-            color: var(--secondary);
-            margin-right: 12px;
-            font-weight: bold;
-        }
-
-        .about-panel {
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 35px;
-            background:
-                radial-gradient(
-                    circle at top right,
-                    rgba(155, 92, 255, 0.14),
-                    transparent 60%
-                ),
-                var(--surface);
-        }
-
-        .about-panel h3 {
-            font-size: 23px;
-            margin-bottom: 25px;
-        }
-
-        .progress-item {
-            margin-bottom: 25px;
-        }
-
-        .progress-label {
-            display: flex;
-            justify-content: space-between;
-            gap: 10px;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .progress-track {
-            height: 6px;
-            border-radius: 10px;
-            background: #27273a;
-            overflow: hidden;
-        }
-
-        .progress-fill {
-            height: 100%;
-            border-radius: 10px;
-            background: linear-gradient(
-                90deg,
-                var(--primary),
-                var(--secondary)
-            );
-        }
-
-        /* =========================
-           CHAT DEMO
-        ========================= */
-
-        .demo {
-            padding: 100px 0;
-            background: #0b0b18;
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .chat-box {
-            max-width: 720px;
-            margin: 45px auto 0;
-            background: #10101e;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.25);
-        }
-
-        .chat-header {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 18px 22px;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .chat-avatar {
-            width: 40px;
-            height: 40px;
-            display: grid;
-            place-items: center;
-            background: linear-gradient(
-                135deg,
-                var(--primary),
-                #5548cf
-            );
-            border-radius: 12px;
-        }
-
-        .chat-header h3 {
-            font-size: 15px;
-        }
-
-        .chat-header p {
-            font-size: 12px;
-            color: #7eeab2;
-        }
-
-        .chat-messages {
-            height: 320px;
-            overflow-y: auto;
-            padding: 24px;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .message {
-            max-width: 85%;
-            padding: 13px 16px;
-            border-radius: 14px;
-            font-size: 14px;
-            white-space: pre-wrap;
-            overflow-wrap: anywhere;
-        }
-
-        .bot-message {
-            align-self: flex-start;
-            background: #1b1b30;
-            color: #e2e2f0;
-            border-bottom-left-radius: 4px;
-        }
-
-        .user-message {
-            align-self: flex-end;
-            background: linear-gradient(
-                120deg,
-                #8054ed,
-                #5e55d9
-            );
-            color: white;
-            border-bottom-right-radius: 4px;
-        }
-
-        .chat-form {
-            display: flex;
-            gap: 10px;
-            padding: 18px;
-            border-top: 1px solid var(--border);
-        }
-
-        .chat-form input {
-            flex: 1;
-            min-width: 0;
-            background: #19192a;
-            border: 1px solid var(--border);
-            outline: none;
-            color: white;
-            padding: 14px;
-            border-radius: 10px;
-        }
-
-        .chat-form input:focus {
-            border-color: var(--primary);
-        }
-
-        .chat-form button {
-            padding: 0 18px;
-        }
-
-        .demo-note {
-            text-align: center;
-            color: #77778e;
-            font-size: 12px;
-            margin-top: 18px;
-        }
-
-        /* =========================
-           CALL TO ACTION
-        ========================= */
-
-        .cta {
-            padding: 100px 0;
-        }
-
-        .cta-panel {
-            text-align: center;
-            padding: 65px 25px;
-            border: 1px solid rgba(155, 92, 255, 0.3);
-            border-radius: 25px;
-            background:
-                radial-gradient(
-                    circle at top,
-                    rgba(155, 92, 255, 0.17),
-                    transparent 70%
-                ),
-                #10101e;
-        }
-
-        .cta-panel h2 {
-            font-size: clamp(30px, 5vw, 48px);
-            line-height: 1.2;
-            margin-bottom: 20px;
-        }
-
-        .cta-panel p {
-            max-width: 560px;
-            margin: 0 auto 28px;
-            color: var(--muted);
-        }
-
-        /* =========================
-           FOOTER
-        ========================= */
-
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 30px 0;
-        }
-
-        .footer-content {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer-content p {
-            color: #88889f;
-            font-size: 12px;
-        }
-
-        .footer-links {
-            display: flex;
-            gap: 20px;
-            color: #aaaac0;
-            font-size: 12px;
-        }
-
-        .footer-links a:hover {
-            color: var(--secondary);
-        }
-
-        /* =========================
-           MOBILE RESPONSIVENESS
-        ========================= */
-
-        @media (max-width: 850px) {
-            .hero-grid,
-            .about-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding: 75px 0 45px;
-            }
-
-            .hero-content {
-                text-align: center;
-            }
-
-            .hero-description {
-                margin-left: auto;
-                margin-right: auto;
-            }
-
-            .hero-buttons {
-                justify-content: center;
-            }
-
-            .ai-visual {
-                min-height: 390px;
-            }
-
-            .feature-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .about-grid {
-                gap: 40px;
-            }
-        }
-
-        @media (max-width: 600px) {
-            .menu-button {
-                display: block;
-            }
-
-            .nav-links {
-                display: none;
-                position: absolute;
-                top: 75px;
-                left: 0;
-                right: 0;
-                padding: 22px 5%;
-                flex-direction: column;
-                align-items: stretch;
-                gap: 20px;
-                background: #10101e;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .nav-links.open {
-                display: flex;
-            }
-
-            .nav-button {
-                text-align: center;
-            }
-
-            .hero h1 {
-                letter-spacing: -2px;
-            }
-
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .orbit {
-                width: 230px;
-                height: 230px;
-            }
-
-            .orbit::before {
-                width: 180px;
-                height: 180px;
-            }
-
-            .orbit::after {
-                width: 285px;
-                height: 285px;
-            }
-
-            .ai-core {
-                width: 135px;
-                height: 135px;
-                font-size: 50px;
-            }
-
-            .floating-tag {
-                font-size: 10px;
-                padding: 8px 10px;
-            }
-
-            .tag-one {
-                right: 0;
-                top: 40px;
-            }
-
-            .tag-two {
-                left: 0;
-                bottom: 40px;
-            }
-
-            .chat-messages {
-                height: 300px;
-                padding: 16px;
-            }
-
-            .chat-form {
-                padding: 12px;
-            }
-
-            .chat-form input {
-                padding: 12px 10px;
-            }
-
-            .chat-form button {
-                padding: 0 12px;
-            }
-
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .footer-links {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-        }
-
-        @media (prefers-reduced-motion: reduce) {
-            *,
-            *::be
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OREA AI — Your Intelligent Companion</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --bg: #080910;
+    --panel: #10111d;
+    --border: rgba(255,255,255,0.09);
+    --purple: #9b72ff;
+    --blue: #5c9dff;
+    --text: #f4f2ff;
+    --muted: #9697ac;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+button, textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    filter: blur(130px);
+    opacity: 0.15;
+    pointer-events: none;
+    z-index: -1;
+}
+
+.glow.one {
+    background: #853dff;
+    top: -180px;
+    left: 25%;
+}
+
+.glow.two {
+    background: #176dff;
+    bottom: -220px;
+    right: -100px;
+}
+
+/* Navigation */
+
+.sidebar {
+    width: 255px;
+    position: fixed;
+    inset: 0 auto 0 0;
+    padding: 28px 18px;
+    background: rgba(12,13,23,0.94);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    z-index: 5;
+    transition: transform .3s ease;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 0 8px;
+    margin-bottom: 38px;
+}
+
+.logo-icon {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+    border-radius: 13px;
+    background: linear-gradient(135deg, #a77aff, #567dff);
+    font-size: 22px;
+    box-shadow: 0 0 25px #8256ff44;
+}
+
+.logo-name {
+    font-size: 23px;
+    font-weight: 800;
+    letter-spacing: 2px;
+}
+
+.logo-name span {
+    color: var(--purple);
+}
+
+.new-chat {
+    padding: 14px;
+    border: 1px solid #8b65ff66;
+    background: linear-gradient(110deg, #8b5cf622, #5488ff11);
+    border-radius: 12px;
+    color: white;
+    text-align: left;
+    font-size: 14px;
+    margin-bottom: 32px;
+}
+
+.new-chat:hover {
+    background: #8b5cf633;
+}
+
+.section-label {
+    color: #777990;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    padding: 0 10px;
+    margin-bottom: 15px;
+}
+
+.nav-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px 10px;
+    color: #aaaabd;
+    font-size: 13px;
+    border-radius: 9px;
+    margin-bottom: 4px;
+    cursor: pointer;
+}
+
+.nav-item:hover, .nav-item.active {
+    background: #ffffff09;
+    color: white;
+}
+
+.nav-item.active {
+    border-left: 2px solid var(--purple);
+}
+
+.sidebar-bottom {
+    margin-top: auto;
+}
+
+.plan-card {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 15px;
+    background: #ffffff04;
+}
+
+.plan-card strong {
+    font-size: 13px;
+}
+
+.plan-card p {
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+    margin: 8px 0 12px;
+}
+
+.plan-card button {
+    width: 100%;
+    padding: 10px;
+    border: 0;
+    border-radius: 8px;
+    color: white;
+    font-size: 12px;
+    background: linear-gradient(110deg, #8b5cf6, #587dff);
+}
+
+/* Main layout */
+
+.main {
+    margin-left: 255px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.topbar {
+    height: 76px;
+    padding: 0 35px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #08091055;
+    backdrop-filter: blur(15px);
+}
+
+.model {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.status {
+    color: #70e6a1;
+    font-size: 11px;
+    font-weight: 400;
+}
+
+.status::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #70e6a1;
+    border-radius: 50%;
+    margin-right: 6px;
+}
+
+.top-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.top-actions button, .menu-button {
+    background: #ffffff07;
+    border: 1px solid var(--border);
+    color: #d7d5e9;
+    border-radius: 9px;
+    padding: 10px 13px;
+    font-size: 12px;
+}
+
+.menu-button {
+    display: none;
+}
+
+.content {
+    width: min(900px, 100%);
+    margin: 0 auto;
+    padding: 40px 35px 20px;
+    flex: 1;
+}
+
+/* Welcome section */
+
+.welcome {
+    text-align: center;
+    padding: 30px 0 35px;
+}
+
+.orb {
+    width: 105px;
+    height: 105px;
+    margin: 0 auto 28px;
+    position: relative;
+    display: grid;
+    place-items: center;
+    border-radius: 32px;
+    background: linear-gradient(145deg, #9d71ff, #426df4 80%);
+    box-shadow: 0 0 70px #7650ff33, inset 0 1px 1px #ffffff88;
+    animation: float 4s ease-in-out infinite;
+}
+
+.orb::before {
+    content: "";
+    position: absolute;
+    inset: -9px;
+    border: 1px solid #9a76ff55;
+    border-radius: 38px;
+}
+
+.orb span {
+    font-size: 48px;
+    font-weight: 800;
+    color: white;
+    text-shadow: 0 0 30px #ffffff77;
+}
+
+@keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-9px); }
+}
+
+.eyebrow {
+    color: #ae8cff;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    margin-bottom: 15px;
+}
+
+h1 {
+    font-size: clamp(31px, 5vw, 48px);
+    letter-spacing: -2px;
+    line-height: 1.2;
+    margin-bottom: 16px;
+}
+
+.gradient-text {
+    background: linear-gradient(90deg, #bd9aff, #7ca9ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.subtitle {
+    max-width: 490px;
+    margin: auto;
+    font-size: 14px;
+    line-height: 1.9;
+    color: var(--muted);
+}
+
+/* Suggested prompts */
+
+.suggestions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 10px 0 28px;
+}
+
+.suggestion {
+    background: linear-gradient(130deg, #ffffff07, #ffffff02);
+    border: 1px solid var(--border);
+    padding: 17px;
+    text-align: left;
+    border-radius: 13px;
+    color: white;
+    transition: .2s;
+}
+
+.suggestion:hover {
+    transform: translateY(-3px);
+    border-color: #9873ff77;
+    background: #8b5cf611;
+}
+
+.suggestion .icon {
+    display: block;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.suggestion strong {
+    display: block;
+    font-size: 12px;
+    margin-bottom: 7px;
+}
+
+.suggestion small {
+    display: block;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.7;
+}
+
+/* Chat */
+
+.chat {
+    display: none;
+    flex-direction: column;
+    gap: 22px;
+    margin: 25px 0;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+}
+
+.message.user {
+    justify-content: flex-end;
+}
+
+.avatar {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg, #9d71ff, #426df4);
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.bubble {
+    max-width: 85%;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+    background: #ffffff07;
+    border-radius: 4px 13px 13px 13px;
+    font-size: 13px;
+    line-height: 1.9;
+    color: #deddec;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.user .bubble {
+    background: #7650ff19;
+    border-color: #9873ff33;
+    border-radius: 13px 4px 13px 13px;
+}
+
+.typing {
+    color: #aaa0cc;
+    font-size: 12px;
+}
+
+/* Composer */
+
+.composer-wrap {
+    position: sticky;
+    bottom: 0;
+    padding: 15px 0 18px;
+    background: linear-gradient(0deg, var(--bg) 78%, transparent);
+}
+
+.composer {
+    border: 1px solid #ffffff19;
+    border-radius: 17px;
+    background: #131420;
+    padding: 14px;
+    box-shadow: 0 12px 50px #0003;
+    transition: border .2s;
+}
+
+.composer:focus-within {
+    border-color: #9774ff88;
+}
+
+.composer textarea {
+    width: 100%;
+    min-height: 45px;
+    max-height: 160px;
+    resize: vertical;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: white;
+    padding: 5px 3px 12px;
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+.composer textarea::placeholder {
+    color: #777990;
+}
+
+.composer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.composer-hint {
+    color: #73758c;
+    font-size: 10px;
+}
+
+.send-btn {
+    width: 39px;
+    height: 39px;
+    border: 0;
+    border-radius: 11px;
+    background: linear-gradient(135deg, #a477ff, #587fff);
+    color: white;
+    font-size: 19px;
+    box-shadow: 0 0 20px #8256ff22;
+}
+
+.send-btn:hover {
+    filter: brightness(1.2);
+}
+
+.footer {
+    text-align: center;
+    color: #686a80;
+    font-size: 10px;
+    padding: 8px 0 0;
+}
+
+/* Responsive */
+
+@media(max-width: 760px) {
+    .sidebar {
+        transform: translateX(-100%);
+        box-shadow: 20px 0 70px #0008;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+    }
+
+    .topbar {
+        height: 65px;
+        padding: 0 16px;
+    }
+
+    .menu-button {
+        display: block;
+    }
+
+    .top-actions button:first-child {
+        display: none;
+    }
+
+    .content {
+        padding: 25px 17px 12px;
+    }
+
+    .welcome {
+        padding-top: 30px;
+    }
+
+    .orb {
+        width: 85px;
+        height: 85px;
+        border-radius: 26px;
+    }
+
+    .orb span {
+        font-size: 39px;
+    }
+
+    .suggestions {
+        gap: 9px;
+    }
+
+    .suggestion {
+        padding: 13px;
+    }
+
+    .suggestion strong {
+        font-size: 11px;
+    }
+
+    .suggestion small {
+        font-size: 10px;
+    }
+
+    .composer-hint {
+        max-width: 210px;
+        line-height: 1.6;
+    }
+}
+
+@media(max-width: 380px) {
+    .suggestions {
+        grid-template-columns: 1fr;
+    }
+
+    .model {
+        font-size: 12px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<!-- Sidebar -->
+
+<aside class="sidebar" id="sidebar">
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+        <div class="logo-name">OREA<span>.</span></div>
+    </div>
+
+    <button class="new-chat" onclick="newChat()">
+        ＋ &nbsp; New conversation
+    </button>
+
+    <div class="section-label">WORKSPACE</div>
+
+    <div class="nav-item active" onclick="newChat()">✧ &nbsp; AI Assistant</div>
+    <div class="nav-item" onclick="showFeature('Creative Studio', 'Create ideas, stories, designs and original concepts with OREA.')">◈ &nbsp; Creative Studio</div>
+    <div class="nav-item" onclick="showFeature('Code Assistant', 'Get help understanding code, solving programming problems and building projects.')">⌘ &nbsp; Code Assistant</div>
+    <div class="nav-item" onclick="showFeature('Study Mode', 'Explore subjects, simplify difficult concepts and practise for your next test.')">▤ &nbsp; Study Mode</div>
+
+    <div class="section-label" style="margin-top:32px">YOUR SPACE</div>
+
+    <div class="nav-item" onclick="showHistory()">◷ &nbsp; Recent chats</div>
+    <div class="nav-item" onclick="showFeature('Settings', 'OREA settings will be available here when account features are connected.')">⚙ &nbsp; Settings</div>
+
+    <div class="sidebar-bottom">
+        <div class="plan-card">
+            <strong>✦ Meet your new AI</strong>
+            <p>Ideas, answers and possibilities. All in one place.</p>
+            <button onclick="showFeature('OREA Pro', 'This is a demo upgrade screen. Connect a real payment and account system to offer paid plans.')">Explore OREA</button>
+        </div>
+    </div>
+</aside>
+
+<!-- Main application -->
+
+<main class="main">
+
+    <header class="topbar">
+        <div style="display:flex;align-items:center;gap:12px">
+            <button class="menu-button" onclick="toggleSidebar()">☰</button>
+            <div class="model">
+                <span>✦ OREA Intelligence</span>
+                <span class="status">Ready</span>
+            </div>
+        </div>
+
+        <div class="top-actions">
+            <button onclick="showFeature('About OREA', 'OREA is your intelligent digital companion for learning, creativity and productivity.')">About OREA</button>
+            <button onclick="newChat()">＋ New chat</button>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <section class="welcome" id="welcome">
+            <div class="orb"><span>O</span></div>
+
+            <div class="eyebrow">YOUR WORLD. YOUR INTELLIGENCE.</div>
+
+            <h1>
+                Think bigger.<br>
+                <span class="gradient-text">Create with OREA.</span>
+            </h1>
+
+            <p class="subtitle">
+                Your ideas deserve more. Ask questions, explore possibilities,
+                write code, learn new things and turn imagination into action.
+            </p>
+        </section>
+
+        <section class="suggestions" id="suggestions">
+
+            <button class="suggestion" onclick="ask('Help me learn a difficult subject in a simple way.')">
+                <span class="icon">✧</span>
+                <strong>Learn something new</strong>
+                <small>Make difficult topics easy to understand.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Give me five creative ideas for a new project.')">
+                <span class="icon">◈</span>
+                <strong>Unlock creativity</strong>
+                <small>Discover fresh ideas and possibilities.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Help me build a modern website using HTML, CSS and JavaScript.')">
+                <span class="icon">⌘</span>
+                <strong>Build with code</strong>
+                <small>Turn your ideas into working projects.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Help me plan my goals and organise my week.')">
+                <span class="icon">◷</span>
+                <strong>Plan your next move</strong>
+                <small>Organise your goals and get things done.</small>
+            </button>
+
+        </section>
+
+        <section class="chat" id="chat" aria-live="polite"></section>
+
+        <div class="composer-wrap">
+            <div class="composer">
+                <textarea
+                    id="prompt"
+                    rows="1"
+                    placeholder="Ask OREA anything..."
+                    aria-label="Message OREA"
+                    onkeydown="handleKey(event)"
+                ></textarea>
+
+                <div class="composer-bottom">
+                    <span class="composer-hint">✦ Curiosity starts here. Press Enter to send.</span>
+                    <button class="send-btn" onclick="sendMessage()" aria-label="Send message">↑</button>
+                </div>
+            </div>
+
+            <div class="footer">
+                OREA AI can make mistakes. Verify important information.
+                <br><br>
+                © 2026 OREA AI · Built for curious minds.
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script>
+const promptInput = document.getElementById("prompt");
+const chat = document.getElementById("chat");
+const welcome = document.getElementById("welcome");
+const suggestions = document.getElementById("suggestions");
+
+let history = [];
+let busy = false;
+
+function toggleSidebar() {
+    document.getElementById("sidebar").classList.toggle("open");
+}
+
+function handleKey(event) {
+    if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        sendMessage();
+    }
+}
+
+function ask(text) {
+    promptInput.value = text;
+    sendMessage();
+}
+
+function addMessage(text, type) {
+    const row = document.createElement("div");
+    row.className = "message " + type;
+
+    if (type === "assistant") {
+        const avatar = document.createElement("div");
+        avatar.className = "avatar";
+        avatar.textContent = "O";
+        row.appendChild(avatar);
+    }
+
+    const bubble = document.createElement("div");
+    bubble.className = "bubble";
+    bubble.textContent = text;
+
+    row.appendChild(bubble);
+    chat.appendChild(row);
+
+    chat.scrollIntoView({ behavior: "smooth", block: "end" });
+    return bubble;
+}
+
+function getDemoResponse(text) {
+    const q = text.toLowerCase();
+
+    if (/\b(hello|hi|hey|good morning|good evening)\b/.test(q)) {
+        return "Hey there! 👋 I'm OREA, your AI companion. What would you like to explore today?";
+    }
+
+    if (q.includes("your name") || q.includes("who are you")) {
+        return "I'm OREA — your digital companion for ideas, learning, creativity and coding. ✨\n\nThis website is currently running in demo mode. Connect an AI API to give me real conversational intelligence.";
+    }
+
+    if (q.includes("website") || q.includes("html") || q.includes("javascript") || q.includes("code")) {
+        return "Let's build something awesome! 💻\n\nFor a website, start with three technologies:\n\n• HTML — structures your page.\n• CSS — gives it style and animations.\n• JavaScript — makes it interactive.\n\nOREA's interface is built using all three. Connect a real AI backend to generate tailored code for your projects.";
+    }
+
+    if (q.includes("study") || q.includes("learn") || q.includes("school") || q.includes("test")) {
+        return "Let's make learning easier! 📚\n\n1. Break the topic into smaller parts.\n2. Understand each idea with an example.\n3. Explain it in your own words.\n4. Test yourself with practice questions.\n\nTell me the exact subject or topic you are studying, and we can work through it step by step once the AI backend is connected.";
+    }
+
+    if (q.includes("idea") || q.includes("creative") || q.includes("project")) {
+        return "Time to think outside the box! ✨\n\nHere are three project ideas:\n\n1. A personal AI assistant website.\n2. A smart study planner with quizzes.\n3. A creative idea generator for students.\n\nPick one and develop it into something amazing!";
+    }
+
+    if (q.includes("plan") || q.includes("goal") || q.includes("week")) {
+        return "Here's a simple way to organise your goals. 🎯\n\n• Choose three priorities.\n• Break each priority into small tasks.\n• Schedule time for each task.\n• Review your progress at the end of the day.\n\nStart small, stay consistent and adjust your plan as you go.";
+    }
+
+    return "Thanks for your message! ✨\n\nYou've successfully interacted with OREA's demo interface.\n\nTo answer arbitrary questions intelligently, this website needs a real AI backend. Connect a server to an AI model API, then send your message to that server and display its response here.\n\nYour idea is the beginning of something great.";
+}
+
+function sendMessage() {
+    const text = promptInput.value.trim();
+
+    if (!text || busy) return;
+
+    busy = true;
+    promptInput.value = "";
+
+    welcome.style.display = "none";
+    suggestions.style.display = "none";
+    chat.style.display = "flex";
+
+    addMessage(text, "user");
+    history.push({ role: "user", content: text });
+
+    const loading = addMessage("OREA is thinking...", "assistant");
+    loading.classList.add("typing");
+
+    setTimeout(() => {
+        const response = getDemoResponse(text);
+
+        loading.classList.remove("typing");
+        loading.textContent = response;
+
+        history.push({ role: "assistant", content: response });
+
+        busy = false;
+        promptInput.focus();
+    }, 700);
+}
+
+function newChat() {
+    history = [];
+    busy = false;
+
+    chat.replaceChildren();
+    chat.style.display = "none";
+
+    welcome.style.display = "block";
+    suggestions.style.display = "grid";
+
+    promptInput.value = "";
+
+    document.getElementById("sidebar").classList.remove("open");
+    promptInput.focus();
+}
+
+function showFeature(title, description) {
+    newChat();
+    welcome.style.display = "none";
+    suggestions.style.display = "none";
+    chat.style.display = "flex";
+
+    addMessage(title, "user");
+    addMessage(description, "assistant");
+
+    document.getElementById("sidebar").classList.remove("open");
+}
+
+function showHistory() {
+    newChat();
+    showFeature(
+        "Recent chats",
+        "Your conversations appear here during the current session. This demo does not save chats after the page is refreshed."
+    );
+}
+</script
