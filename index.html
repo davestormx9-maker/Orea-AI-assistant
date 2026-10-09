@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080910">
+    <meta name="description" content="OREA AI — a digital companion for learning, creativity, coding and productivity.">
+    <title>OREA AI — Your Intelligent Companion</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+<div class="glow one"></div>
+<div class="glow two"></div>
+
+<!-- Sidebar -->
+
+<aside class="sidebar" id="sidebar">
+    <div class="logo">
+        <div class="logo-icon">✦</div>
+        <div class="logo-name">OREA<span>.</span></div>
+    </div>
+
+    <button class="new-chat" onclick="newChat()">
+        ＋ &nbsp; New conversation
+    </button>
+
+    <div class="section-label">WORKSPACE</div>
+
+    <div class="nav-item active" onclick="newChat()">✧ &nbsp; AI Assistant</div>
+    <div class="nav-item" onclick="showFeature('Creative Studio', 'Create ideas, stories, designs and original concepts with OREA.')">◈ &nbsp; Creative Studio</div>
+    <div class="nav-item" onclick="showFeature('Code Assistant', 'Get help understanding code, solving programming problems and building projects.')">⌘ &nbsp; Code Assistant</div>
+    <div class="nav-item" onclick="showFeature('Study Mode', 'Explore subjects, simplify difficult concepts and practise for your next test.')">▤ &nbsp; Study Mode</div>
+
+    <div class="section-label" style="margin-top:32px">YOUR SPACE</div>
+
+    <div class="nav-item" onclick="showHistory()" role="button" tabindex="0">◷ &nbsp; Recent chats</div>
+    <div class="nav-item" onclick="clearChatHistory()" role="button" tabindex="0">⌫ &nbsp; Clear chat history</div>
+    <div class="nav-item" onclick="showFeature('Settings', 'OREA settings will be available here when account features are connected.')">⚙ &nbsp; Settings</div>
+
+    <div class="sidebar-bottom">
+        <div class="plan-card">
+            <strong>✦ Meet your new AI</strong>
+            <p>Ideas, answers and possibilities. All in one place.</p>
+            <button onclick="showFeature('OREA Pro', 'This is a demo upgrade screen. Connect a real payment and account system to offer paid plans.')">Explore OREA</button>
+        </div>
+    </div>
+</aside>
+
+<!-- Main application -->
+
+<main class="main">
+
+    <header class="topbar">
+        <div style="display:flex;align-items:center;gap:12px">
+            <button class="menu-button" onclick="toggleSidebar()">☰</button>
+            <div class="model">
+                <span>✦ OREA Intelligence</span>
+                <span class="status">Ready</span>
+            </div>
+        </div>
+
+        <div class="top-actions">
+            <button onclick="showFeature('About OREA', 'OREA is your intelligent digital companion for learning, creativity and productivity.')">About OREA</button>
+            <button onclick="newChat()">＋ New chat</button>
+        </div>
+    </header>
+
+    <div class="content">
+
+        <section class="welcome" id="welcome">
+            <div class="orb"><span>O</span></div>
+
+            <div class="eyebrow">YOUR WORLD. YOUR INTELLIGENCE.</div>
+
+            <h1>
+                Think bigger.<br>
+                <span class="gradient-text">Create with OREA.</span>
+            </h1>
+
+            <p class="subtitle">
+                Your ideas deserve more. Ask questions, explore possibilities,
+                write code, learn new things and turn imagination into action.
+            </p>
+        </section>
+
+        <section class="suggestions" id="suggestions">
+
+            <button class="suggestion" onclick="ask('Help me learn a difficult subject in a simple way.')">
+                <span class="icon">✧</span>
+                <strong>Learn something new</strong>
+                <small>Make difficult topics easy to understand.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Give me five creative ideas for a new project.')">
+                <span class="icon">◈</span>
+                <strong>Unlock creativity</strong>
+                <small>Discover fresh ideas and possibilities.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Help me build a modern website using HTML, CSS and JavaScript.')">
+                <span class="icon">⌘</span>
+                <strong>Build with code</strong>
+                <small>Turn your ideas into working projects.</small>
+            </button>
+
+            <button class="suggestion" onclick="ask('Help me plan my goals and organise my week.')">
+                <span class="icon">◷</span>
+                <strong>Plan your next move</strong>
+                <small>Organise your goals and get things done.</small>
+            </button>
+
+        </section>
+
+        <section class="chat" id="chat" aria-live="polite"></section>
+
+        <div class="composer-wrap">
+            <div class="composer">
+                <textarea
+                    id="prompt"
+                    rows="1"
+                    placeholder="Ask OREA anything..."
+                    aria-label="Message OREA"
+                    onkeydown="handleKey(event)"
+                ></textarea>
+
+                <div class="composer-bottom">
+                    <span class="composer-hint">✦ Curiosity starts here. Press Enter to send.</span>
+                    <button class="send-btn" onclick="sendMessage()" aria-label="Send message">↑</button>
+                </div>
+            </div>
+
+            <div class="footer">
+                OREA AI can make mistakes. Verify important information.
+                <br><br>
+                © 2026 OREA AI · Built for curious minds.
+            </div>
+        </div>
+
+    </div>
+</main>
+</body>
+</html>
