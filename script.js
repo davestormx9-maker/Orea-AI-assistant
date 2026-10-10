@@ -80,6 +80,11 @@ function addMessage(text, role) {
     const bubble = document.createElement("div");
     bubble.className = "bubble";
     bubble.textContent = String(text);
+   if (role === "assistant" && window.MathJax) {
+  window.MathJax.typesetPromise([bubble]).catch(function (error) {
+    console.error("Math rendering error:", error);
+  });
+   }
     message.appendChild(bubble);
     chat.appendChild(message);
     scrollToBottom();
