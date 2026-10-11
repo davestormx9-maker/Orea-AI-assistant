@@ -149,7 +149,8 @@ async function sendMessage() {
         responseBubble.classList.remove("typing");
         const plainReply = toPlainText(data.reply);
         responseBubble.textContent = plainReply;
-        chatHistory.push({ role: "assistant", content: plainReply });        saveCurrentChat();
+        chatHistory.push({ role: "assistant", content: plainReply });
+saveCurrentChat();
     } catch (error) {
         responseBubble.classList.remove("typing");
         responseBubble.textContent = error.message ||
