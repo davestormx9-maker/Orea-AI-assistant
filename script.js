@@ -65,6 +65,23 @@ function scrollToBottom() {
     }));
 }
 
+function toPlainText(text) {
+    return String(text)
+        .replace(/```[a-zA-Z0-9_-]*[ \t]*\n?/g, "")
+        .replace(/`([^`]+)`/g, "$1")
+        .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+        .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+        .replace(/^\s{0,3}#{1,6}\s+/gm, "")
+        .replace(/^\s*>\s?/gm, "")
+        .replace(/^\s*[-+*]\s+/gm, "")
+        .replace(/^\s*\d+[.)]\s+/gm, "")
+        .replace(/(\*\*|__)(.*?)\1/g, "$2")
+        .replace(/(\*|_)(.*?)\1/g, "$2")
+        .replace(/~~(.*?)~~/g, "$1")
+        .replace(/^\s*[-*_]{3,}\s*$/gm, "")
+        .replace(/[ \t]+\n/g, "\n")
+        .trim();
+}
 function addMessage(text, role) {
     const message = document.createElement("div");
     message.className = `message ${role}`;
@@ -79,16 +96,11 @@ function addMessage(text, role) {
 
     const bubble = document.createElement("div");
     bubble.className = "bubble";
-    if (role === "assistant" && window.marked && window.DOMPurify) {
-  bubble.innerHTML = window.DOMPurify.sanitize(window.marked.parse(String(text)));
+    if (role === "assistant") {
+    bubble.textContent = toPlainText(text);
 } else {
-  bubble.textContent = String(text);
-}
-   if (role === "assistant" && window.MathJax) {
-  window.MathJax.typesetPromise([bubble]).catch(function (error) {
-    console.error("Math rendering error:", error);
-  });
-   }
+    bubble.textContent = String(text);
+    }
     message.appendChild(bubble);
     chat.appendChild(message);
     scrollToBottom();
@@ -135,9 +147,9 @@ async function sendMessage() {
         }
 
         responseBubble.classList.remove("typing");
-        responseBubble.textContent = data.reply;
-        chatHistory.push({ role: "assistant", content: data.reply });
-        saveCurrentChat();
+        const plainReply = toPlainText(data.reply);
+        responseBubble.textContent = plainReply;
+        chatHistory.push({ role: "assistant", content: plainReply });        saveCurrentChat();
     } catch (error) {
         responseBubble.classList.remove("typing");
         responseBubble.textContent = error.message ||
