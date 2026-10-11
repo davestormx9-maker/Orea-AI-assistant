@@ -64,22 +64,43 @@ function scrollToBottom() {
         behavior: "smooth"
     }));
 }
-
 function toPlainText(text) {
     return String(text)
+        // Remove code fence markers
         .replace(/```[a-zA-Z0-9_-]*[ \t]*\n?/g, "")
+        .replace(/```/g, "")
         .replace(/`([^`]+)`/g, "$1")
+
+        // Keep readable link and image text
         .replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
         .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+
+        // Remove heading and quote markers
         .replace(/^\s{0,3}#{1,6}\s+/gm, "")
         .replace(/^\s*>\s?/gm, "")
-        .replace(/^\s*[-+*]\s+/gm, "")
-        .replace(/^\s*\d+[.)]\s+/gm, "")
-        .replace(/(\*\*|__)(.*?)\1/g, "$2")
-        .replace(/(\*|_)(.*?)\1/g, "$2")
-        .replace(/~~(.*?)~~/g, "$1")
+
+        // Keep bullet points readable
+        .replace(/^\s*[-+*]\s+/gm, "• ")
+        .replace(/^\s*\d+[.)]\s+/gm, "• ")
+
+        // Remove bold, italic and strikethrough markers
+        .replace(/\*\*(.*?)\*\*/gs, "$1")
+        .replace(/__(.*?)__/gs, "$1")
+        .replace(/\*([^*\n]+)\*/g, "$1")
+        .replace(/_([^_\n]+)_/g, "$1")
+        .replace(/~~(.*?)~~/gs, "$1")
+
+        // Remove horizontal rules
         .replace(/^\s*[-*_]{3,}\s*$/gm, "")
+
+        // Make Markdown tables readable by removing pipe separators
+        .replace(/^\s*\|?[\s:|-]+\|?\s*$/gm, "")
+        .replace(/^\s*\|/gm, "")
+        .replace(/\|/g, "  ")
+
+        // Clean up extra spaces
         .replace(/[ \t]+\n/g, "\n")
+        .replace(/\n{3,}/g, "\n\n")
         .trim();
 }
 function addMessage(text, role) {
