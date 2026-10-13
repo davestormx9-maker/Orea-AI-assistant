@@ -1,6 +1,6 @@
 {
   "name": "orea-ai",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,6 +10,7 @@
   "dependencies": {
     "@google/genai": "^1.0.0",
     "dotenv": "^16.4.7",
-    "express": "^5.0.0"
+    "express": "^5.0.0",
+    "firebase-admin": "^13.0.0"
   }
 }
