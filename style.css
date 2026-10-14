@@ -777,3 +777,174 @@ h1 {
     text-align: left;
     cursor: pointer;
 }
+/* =========================================
+   OREA AI — ULTRA-PREMIUM GLASS REDESIGN
+   ========================================= */
+
+:root {
+    --orea-bg: #080710;
+    --orea-surface: rgba(22, 19, 39, 0.72);
+    --orea-glass: rgba(255, 255, 255, 0.045);
+    --orea-border: rgba(255, 255, 255, 0.09);
+    --orea-purple: #a78bfa;
+    --orea-blue: #818cf8;
+    --orea-text: #f5f3ff;
+    --orea-muted: #a5a0bb;
+}
+
+/* Overall background */
+html {
+    min-height: 100%;
+    background: var(--orea-bg);
+}
+
+body {
+    min-height: 100vh;
+    color: var(--orea-text);
+    background:
+        radial-gradient(
+            ellipse at 12% 0%,
+            rgba(124, 58, 237, 0.16),
+            transparent 42%
+        ),
+        radial-gradient(
+            ellipse at 90% 85%,
+            rgba(79, 70, 229, 0.13),
+            transparent 38%
+        ),
+        var(--orea-bg);
+}
+
+/* Premium translucent panels */
+.sidebar,
+.topbar,
+.chat-container,
+.chat-area,
+.welcome-screen {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* Sidebar */
+.sidebar {
+    background: rgba(13, 11, 24, 0.84);
+    border-right: 1px solid var(--orea-border);
+}
+
+/* Top navigation */
+.topbar {
+    background: rgba(12, 10, 23, 0.66);
+    border-bottom: 1px solid var(--orea-border);
+}
+
+/* Glass-style cards */
+.suggestion-card,
+.suggestion,
+.chat-card {
+    background: var(--orea-glass);
+    border: 1px solid var(--orea-border);
+    border-radius: 18px;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+.suggestion-card:hover,
+.suggestion:hover {
+    background: rgba(167, 139, 250, 0.09);
+    border-color: rgba(167, 139, 250, 0.35);
+    transform: translateY(-3px);
+}
+
+/* Message composer */
+.composer,
+.input-container,
+.chat-input-container {
+    background: rgba(25, 21, 42, 0.82);
+    border: 1px solid rgba(167, 139, 250, 0.19);
+    border-radius: 24px;
+    box-shadow: 0 12px 45px rgba(0, 0, 0, 0.22);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+textarea,
+input {
+    color: var(--orea-text);
+}
+
+textarea:focus,
+input:focus {
+    outline: none;
+    border-color: rgba(167, 139, 250, 0.6);
+}
+
+/* Buttons */
+button {
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.97);
+}
+
+/* Send button */
+.send-btn,
+#send-btn,
+button[type="submit"] {
+    border-color: rgba(167, 139, 250, 0.35);
+}
+
+/* Account panel — give it a glass appearance for now */
+#account-panel {
+    background: rgba(18, 15, 32, 0.92) !important;
+    border: 1px solid var(--orea-border);
+    border-radius: 20px;
+    box-shadow: 0 16px 50px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+}
+
+/* Smooth page appearance */
+@media (prefers-reduced-motion: no-preference) {
+    .welcome-screen {
+        animation: orea-fade-in 0.65s ease both;
+    }
+
+    @keyframes orea-fade-in {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* Mobile refinements */
+@media (max-width: 768px) {
+    .sidebar {
+        backdrop-filter: blur(28px);
+        -webkit-backdrop-filter: blur(28px);
+    }
+
+    .suggestion-card,
+    .suggestion {
+        border-radius: 16px;
+    }
+
+    #account-panel {
+        margin: 12px;
+        max-width: calc(100% - 24px);
+        box-sizing: border-box;
+    }
+}
