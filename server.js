@@ -38,7 +38,7 @@ try {
     );
 }
 
-// Verify the Firebase ID token.
+// Verify Firebase authentication.
 async function requireAuth(req, res, next) {
     try {
         if (!getApps().length) {
@@ -57,7 +57,6 @@ async function requireAuth(req, res, next) {
         }
 
         req.user = await getAuth().verifyIdToken(match[1]);
-
         return next();
     } catch {
         return res.status(401).json({
@@ -66,7 +65,7 @@ async function requireAuth(req, res, next) {
     }
 }
 
-// Check whether a Gemini error may be temporary.
+// Detect temporary Gemini errors.
 function isRetryable(error) {
     const status = Number(
         error?.status ??
@@ -85,7 +84,7 @@ function isRetryable(error) {
     );
 }
 
-// Retry temporary Gemini failures up to 3 attempts.
+// Retry Gemini up to three times.
 async function generateWithRetry(ai, contents) {
     const delays = [1000, 2500];
 
@@ -100,9 +99,7 @@ async function generateWithRetry(ai, contents) {
                 }
             });
         } catch (error) {
-            const lastAttempt = attempt === 2;
-
-            if (lastAttempt || !isRetryable(error)) {
+            if (attempt === 2 || !isRetryable(error)) {
                 throw error;
             }
 
@@ -118,7 +115,8 @@ async function generateWithRetry(ai, contents) {
 
     throw new Error("Gemini request failed after retries.");
 }
-// Groq backup when Gemini is unavailable.
+
+// Groq backup provider.
 async function generateWithGroq(contents) {
     const apiKey = process.env.GROQ_API_KEY;
 
@@ -177,10 +175,14 @@ async function generateWithGroq(contents) {
 
     return reply;
 }
+
+// Health check.
 app.get("/api/health", (_req, res) => {
     res.json({
         ok: true,
-        configured: Boolean(process.env.GEMINI_API_KEY),
+        configured: Boolean(
+            process.env.GEMINI_API_KEY || process.env.GROQ_API_KEY
+        ),
         authenticationConfigured: getApps().length > 0
     });
 });
@@ -203,83 +205,12 @@ app.post("/api/chat", requireAuth, async (req, res) => {
             });
         }
 
-        if (!process.env.GEMINI_API_KEY) {
-            return res.status(503).json({
-                error: "OREA AI is not configured yet. Please try again later."
-            });
-        }
-
-        const contents = [];
-
-        if (Array.isArray(history)) {
-            for (const item of history.slice(-20)) {
-                if (
-                    !item ||
-                    !["user", "assistant"].includes(item.role) ||
-                    typeof item.content !== "string" ||
-                    !item.content.trim() ||
-                    item.content.length > 4000
-                ) {
-                    continue;
-                }
-
-                contents.push({
-                    role: item.role === "assistant" ? "model" : "user",
-                    parts: [{ text: item.content }]
-                });
-            }
-        }
-
-        contents.push({
-            role: "user",
-            parts: [{ text: message.trim() }]
-        });
-
-        const ai = new GoogleGenAI({
-            apiKey: process.env.GEMINI_API_KEY
-        });
-
-        const result = await generateWithRetry(ai, contents);
-        const reply = result.text?.trim();
-
-        if (!reply) {
-            return res.status(502).json({
-                error: "OREA received an empty response. Please try again."
-            });
-        }
-
-        return res.json({ reply });
-    } catch (error) {
-        const status = Number(
-            error?.status ??
-            error?.statusCode ??
-            error?.response?.status
-        );
-
-app.post("/api/chat", requireAuth, async (req, res) => {
-    try {
-        const message = req.body?.message;
-        const history = req.body?.history;
-
-        if (typeof message !== "string" || !message.trim()) {
-            return res.status(400).json({
-                error: "Please enter a message."
-            });
-        }
-
-        if (message.length > 4000) {
-            return res.status(400).json({
-                error: "Your message is too long (maximum 4,000 characters)."
-            });
-        }
-
-        // Require at least one configured AI provider.
         if (
             !process.env.GEMINI_API_KEY &&
             !process.env.GROQ_API_KEY
         ) {
             return res.status(503).json({
-                error: "OREA AI is temporarily unavailable. Please try again later."
+                error: "OREA AI is not configured. Please try again later."
             });
         }
 
@@ -320,22 +251,22 @@ app.post("/api/chat", requireAuth, async (req, res) => {
 
                 const result = await generateWithRetry(ai, contents);
                 reply = result.text?.trim() || "";
-            } catch (geminiError) {
+            } catch (error) {
                 console.error(
-                    "Gemini failed; trying backup provider:",
-                    geminiError?.message || geminiError
+                    "Gemini failed; trying Groq backup:",
+                    error?.message || error
                 );
             }
         }
 
-        // If Gemini fails or returns no answer, try Groq.
+        // Fall back to Groq if Gemini fails.
         if (!reply && process.env.GROQ_API_KEY) {
             try {
                 reply = await generateWithGroq(contents);
-            } catch (groqError) {
+            } catch (error) {
                 console.error(
                     "Groq backup failed:",
-                    groqError?.message || groqError
+                    error?.message || error
                 );
             }
         }
@@ -347,7 +278,6 @@ app.post("/api/chat", requireAuth, async (req, res) => {
         }
 
         return res.json({ reply });
-
     } catch (error) {
         console.error(
             "OREA chat request failed:",
@@ -359,9 +289,16 @@ app.post("/api/chat", requireAuth, async (req, res) => {
         });
     }
 });
+
+// Start the server.
+app.listen(port, "0.0.0.0", () => {
     console.log(`OREA AI server listening on port ${port}`);
 
     if (!process.env.GEMINI_API_KEY) {
         console.warn("GEMINI_API_KEY is missing.");
+    }
+
+    if (!process.env.GROQ_API_KEY) {
+        console.warn("GROQ_API_KEY is missing; backup AI is disabled.");
     }
 });
