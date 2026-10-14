@@ -144,15 +144,25 @@ async function sendMessage() {
     responseBubble.classList.add("typing");
 
     try {
-        const response = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                message,
-                history: chatHistory.slice(0, -1).slice(-20)
-            })
-        });
+        const user = window.oreaCurrentUser;
 
+if (!user) {
+    throw new Error("Please log in or register before chatting with OREA.");
+}
+
+const idToken = await user.getIdToken();
+
+const response = await fetch("/api/chat", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${idToken}`
+    },
+    body: JSON.stringify({
+        message,
+        history: chatHistory.slice(0, -1).slice(-20)
+    })
+});
         let data;
         try {
             data = await response.json();
