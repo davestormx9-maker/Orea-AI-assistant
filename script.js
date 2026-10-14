@@ -355,3 +355,37 @@ document.addEventListener("DOMContentLoaded", () => {
     renderChatHistory();
     console.log("OREA AI is ready. Gemini backend connection is enabled.");
 });
+// OREA AI Membership Page
+window.showMembership = function () {
+  const page = document.getElementById("membership-page");
+  const mainContent = document.querySelector(".content");
+  const composer = document.querySelector(".composer-wrap");
+  const topbar = document.querySelector(".topbar");
+
+  if (page) page.hidden = false;
+  if (mainContent) mainContent.hidden = true;
+  if (composer) composer.hidden = true;
+  if (topbar) topbar.hidden = true;
+};
+
+window.hideMembership = function () {
+  const page = document.getElementById("membership-page");
+  const mainContent = document.querySelector(".content");
+  const composer = document.querySelector(".composer-wrap");
+  const topbar = document.querySelector(".topbar");
+
+  if (page) page.hidden = true;
+  if (mainContent) mainContent.hidden = false;
+  if (composer) composer.hidden = false;
+  if (topbar) topbar.hidden = false;
+};
+
+window.showProNotice = function () {
+  const notice = document.getElementById("pro-notice");
+  if (notice) notice.hidden = false;
+};
+
+window.hideProNotice = function () {
+  const notice = document.getElementById("pro-notice");
+  if (notice) notice.hidden = true;
+};
