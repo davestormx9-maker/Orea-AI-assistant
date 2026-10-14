@@ -71,43 +71,55 @@
 <main class="main">
 
     <!-- OREA AI account controls -->
-    <section id="account-panel" style="
-        display:flex;
-        flex-wrap:wrap;
-        align-items:center;
-        justify-content:flex-end;
-        gap:8px;
-        padding:12px 20px;
-        border-bottom:1px solid rgba(255,255,255,0.08);
-    ">
-        <span id="auth-status" role="status" style="margin-right:auto;">
+<!-- OREA AI Premium Account Menu -->
+<details id="account-menu">
+    <summary id="account-menu-toggle">
+        <span class="account-avatar">O</span>
+        <span class="account-menu-label">Your Account</span>
+        <span class="account-chevron">⌄</span>
+    </summary>
+
+    <section id="account-panel">
+        <div class="account-panel-heading">
+            <div>
+                <span class="account-eyebrow">OREA AI</span>
+                <h3>Your Account</h3>
+            </div>
+
+            <span class="account-status-dot"></span>
+        </div>
+
+        <p id="auth-status" role="status" aria-live="polite">
             Checking account...
-        </span>
+        </p>
 
-        <input
-            id="auth-email"
-            type="email"
-            placeholder="Email address"
-            autocomplete="email"
-            aria-label="Email address"
-            style="max-width:180px;padding:9px;border-radius:8px;"
-        >
+        <div class="account-fields">
+            <input
+                id="auth-email"
+                type="email"
+                placeholder="Email address"
+                autocomplete="email"
+                aria-label="Email address"
+            >
 
-        <input
-            id="auth-password"
-            type="password"
-            placeholder="Password"
-            autocomplete="current-password"
-            aria-label="Password"
-            style="max-width:140px;padding:9px;border-radius:8px;"
-        >
+            <input
+                id="auth-password"
+                type="password"
+                placeholder="Password"
+                autocomplete="current-password"
+                aria-label="Password"
+            >
+        </div>
 
-        <button type="button" id="register-btn">Register</button>
-        <button type="button" id="login-btn">Log in</button>
-        <button type="button" id="google-btn">Google</button>
-        <button type="button" id="reset-password-btn">Reset password</button>
-        <button type="button" id="logout-btn">Log out</button>
+        <div class="account-actions">
+            <button type="button" id="login-btn">Log in</button>
+            <button type="button" id="register-btn">Create account</button>
+            <button type="button" id="google-btn">Continue with Google</button>
+            <button type="button" id="reset-password-btn">Reset password</button>
+            <button type="button" id="logout-btn">Log out</button>
+        </div>
     </section>
+</details>
 
     <header class="topbar">
         <div style="display:flex;align-items:center;gap:12px">
