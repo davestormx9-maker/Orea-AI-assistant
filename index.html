@@ -64,18 +64,48 @@
             <button onclick="showFeature('OREA Pro', 'This is a demo upgrade screen. Connect a real payment and account system to offer paid plans.')">Explore OREA</button>
         </div>
     </div>
-    <!-- OREA AI Account Section -->
+<!-- OREA AI Account Menu -->
 <div class="sidebar-account">
+
     <div class="sidebar-account-heading">
         <span class="account-avatar">O</span>
+
         <div class="sidebar-account-info">
-            <strong>OREA Account</strong>
+            <strong id="account-display-name">OREA Account</strong>
+
             <span id="auth-status" role="status" aria-live="polite">
                 Checking account...
             </span>
         </div>
     </div>
-    <div class="sidebar-account-actions">
+
+    <!-- Visible when logged out -->
+    <div id="signed-out-view" hidden>
+        <button type="button" id="open-login-btn">
+            Log in
+        </button>
+    </div>
+
+    <!-- Visible when logged in -->
+    <div id="signed-in-view" hidden>
+        <button type="button" id="view-account-btn">
+            View Account
+        </button>
+    </div>
+
+    <!-- Account details -->
+    <div id="account-details" hidden>
+        <p class="account-detail-label">Email address</p>
+
+        <p id="account-email-display" class="account-email-display"></p>
+
+        <button type="button" id="account-logout-btn">
+            Log out
+        </button>
+    </div>
+
+    <!-- Login and registration form -->
+    <div id="account-login-form" hidden>
         <input
             id="auth-email"
             type="email"
@@ -93,12 +123,19 @@
         >
 
         <button type="button" id="login-btn">Log in</button>
-        <button type="button" id="register-btn">Create account</button>
-        <button type="button" id="google-btn">Continue with Google</button>
-        <button type="button" id="reset-password-btn">Reset password</button>
-        <button type="button" id="logout-btn">Log out</button>
+
+        <button type="button" id="register-btn">
+            Create account
+        </button>
+
+        <button type="button" id="google-btn">
+            Continue with Google
+        </button>
+
+        <button type="button" id="reset-password-btn">
+            Reset password
+        </button>
     </div>
-</div>
 </aside>
 
 <!-- Main application -->
