@@ -1244,3 +1244,173 @@ button[type="submit"] {
         margin-bottom: 28px;
     }
 }
+/* =========================================
+   OREA AI — UNIFIED ACCOUNT INTERFACE
+   Login, Registration & View Account
+   ========================================= */
+
+/* Shared glass-panel styling */
+.sidebar-account {
+    background: linear-gradient(
+        145deg,
+        rgba(28, 22, 48, 0.94),
+        rgba(14, 13, 29, 0.96)
+    );
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+}
+
+/* Shared form and account panel spacing */
+#account-login-form,
+#account-details {
+    margin-top: 14px;
+    padding: 14px;
+    border: 1px solid rgba(167, 139, 250, 0.16);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.025);
+    animation: accountPanelIn 0.25s ease;
+}
+
+/* Respect the hidden attribute */
+#account-login-form[hidden],
+#account-details[hidden],
+#signed-out-view[hidden],
+#signed-in-view[hidden] {
+    display: none !important;
+}
+
+/* Login form layout */
+#account-login-form {
+    display: grid;
+    gap: 9px;
+}
+
+/* Hide the form when hidden */
+#account-login-form[hidden] {
+    display: none !important;
+}
+
+/* Consistent login input fields */
+#account-login-form input {
+    width: 100%;
+    min-width: 0;
+    padding: 11px 12px;
+    border: 1px solid rgba(167, 139, 250, 0.15);
+    border-radius: 11px;
+    background: rgba(5, 5, 15, 0.5);
+    color: #f5f3ff;
+    font-size: 12px;
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+#account-login-form input::placeholder {
+    color: #9189a8;
+}
+
+#account-login-form input:focus {
+    border-color: rgba(167, 139, 250, 0.65);
+    box-shadow: 0 0 15px rgba(139, 92, 246, 0.1);
+}
+
+/* Consistent account buttons */
+#open-login-btn,
+#view-account-btn,
+#account-login-form button,
+#account-logout-btn {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid rgba(167, 139, 250, 0.2);
+    border-radius: 11px;
+    background: linear-gradient(
+        135deg,
+        rgba(139, 92, 246, 0.17),
+        rgba(99, 102, 241, 0.1)
+    );
+    color: #f5f3ff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+#open-login-btn:hover,
+#view-account-btn:hover,
+#account-login-form button:hover {
+    background: rgba(139, 92, 246, 0.25);
+    border-color: rgba(167, 139, 250, 0.5);
+}
+
+/* Google sign-in button */
+#account-login-form #google-btn {
+    background: linear-gradient(
+        135deg,
+        rgba(139, 92, 246, 0.3),
+        rgba(99, 102, 241, 0.2)
+    );
+    border-color: rgba(167, 139, 250, 0.35);
+}
+
+/* Account details */
+#account-details {
+    color: #f5f3ff;
+}
+
+#account-details .account-detail-label {
+    margin-bottom: 7px;
+    color: #a78bfa;
+    font-size: 10px;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+}
+
+#account-details .account-email-display {
+    margin-bottom: 14px;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #e9e5f5;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+/* Separate logout styling */
+#account-logout-btn {
+    background: rgba(255, 85, 110, 0.08);
+    border-color: rgba(255, 100, 120, 0.2);
+    color: #ffbdc7;
+}
+
+#account-logout-btn:hover {
+    background: rgba(255, 85, 110, 0.15);
+    border-color: rgba(255, 100, 120, 0.45);
+}
+
+/* Smooth panel entrance */
+@keyframes accountPanelIn {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Small-screen improvements */
+@media (max-width: 480px) {
+    .sidebar-account {
+        padding: 12px;
+    }
+
+    #account-login-form,
+    #account-details {
+        padding: 12px;
+    }
+}
