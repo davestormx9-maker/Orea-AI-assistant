@@ -61,7 +61,7 @@
         <div class="plan-card">
             <strong>✦ Meet your new AI</strong>
             <p>Ideas, answers and possibilities. All in one place.</p>
-            <button onclick="showFeature('OREA Pro', 'This is a demo upgrade screen. Connect a real payment and account system to offer paid plans.')">Explore OREA</button>
+            <button onclick="showMembership()">Explore OREA ✨</button>
         </div>
     </div>
 <!-- OREA AI Account Menu -->
@@ -233,6 +233,83 @@
         </div>
 
     </div>
+    <!-- OREA AI Membership Page -->
+<section id="membership-page" class="membership-page" hidden>
+  <div class="membership-header">
+    <span class="membership-badge">✦ OREA MEMBERSHIP</span>
+    <h1>Choose your OREA experience</h1>
+    <p>Start free. Upgrade when you're ready for more.</p>
+    <button type="button" class="membership-back" onclick="hideMembership()">
+      ← Back to OREA AI
+    </button>
+  </div>
+
+  <div class="membership-plans">
+
+    <!-- FREE PLAN -->
+    <article class="membership-card">
+      <h2>Free</h2>
+      <p class="membership-description">Explore AI and bring your ideas to life.</p>
+
+      <div class="membership-price">₦0 <span>/ forever</span></div>
+
+      <ul>
+        <li>✓ AI chat access</li>
+        <li>✓ Ask questions and explore ideas</li>
+        <li>✓ Help with writing and learning</li>
+        <li>✓ Personal account</li>
+      </ul>
+
+      <button type="button" class="membership-button free-button"
+        onclick="hideMembership()">
+        Continue with Free
+      </button>
+    </article>
+
+    <!-- PRO PLAN -->
+    <article class="membership-card pro-card">
+      <span class="pro-label">COMING SOON</span>
+      <h2>OREA Pro ✨</h2>
+      <p class="membership-description">A premium experience for ambitious thinkers.</p>
+
+      <div class="membership-price">Coming soon</div>
+
+      <ul>
+        <li>✓ Everything in Free</li>
+        <li>✓ Planned higher usage limits</li>
+        <li>✓ Planned access to premium tools</li>
+        <li>✓ Planned advanced AI features</li>
+        <li>✓ Future member benefits</li>
+      </ul>
+
+      <button type="button" class="membership-button pro-button"
+        onclick="showProNotice()">
+        Get Early Access
+      </button>
+    </article>
+
+  </div>
+
+  <p class="membership-note">
+    OREA Pro is not available for purchase yet. Premium features and pricing
+    will be announced when the service is ready.
+  </p>
+</section>
+<!-- OREA Membership Notice -->
+<div id="pro-notice" class="pro-notice" hidden>
+  <div class="pro-notice-card">
+    <span class="membership-badge">✦ OREA PRO</span>
+    <h2>Something exciting is coming!</h2>
+    <p>
+      OREA Pro is being prepared. Stay tuned for premium features,
+      membership details, and launch announcements.
+    </p>
+    <button type="button" class="membership-button pro-button"
+      onclick="hideProNotice()">
+      Got it
+    </button>
+  </div>
+</div>
 </main>
 </body>
 </html>
