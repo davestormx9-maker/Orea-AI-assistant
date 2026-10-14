@@ -14,7 +14,7 @@ app.disable("x-powered-by");
 app.use(express.json({ limit: "32kb" }));
 app.use(express.static(here));
 
-// Initialize Firebase Admin using Render's private environment variable.
+// Initialize Firebase Admin.
 try {
     const serviceAccountText = process.env.FIREBASE_SERVICE_ACCOUNT_JSON;
 
@@ -32,10 +32,13 @@ try {
 
     console.log("Firebase Admin initialized.");
 } catch (error) {
-    console.error("Firebase Admin initialization failed:", error.message);
+    console.error(
+        "Firebase Admin initialization failed:",
+        error.message
+    );
 }
 
-// Verify the Firebase ID token sent by the frontend.
+// Verify the Firebase ID token.
 async function requireAuth(req, res, next) {
     try {
         if (!getApps().length) {
@@ -53,8 +56,7 @@ async function requireAuth(req, res, next) {
             });
         }
 
-        const decodedToken = await getAuth().verifyIdToken(match[1]);
-        req.user = decodedToken;
+        req.user = await getAuth().verifyIdToken(match[1]);
 
         return next();
     } catch {
@@ -62,6 +64,59 @@ async function requireAuth(req, res, next) {
             error: "Your session is invalid or expired. Please sign in again."
         });
     }
+}
+
+// Check whether a Gemini error may be temporary.
+function isRetryable(error) {
+    const status = Number(
+        error?.status ??
+        error?.statusCode ??
+        error?.response?.status
+    );
+
+    const message = String(error?.message || "").toLowerCase();
+
+    return (
+        [408, 429, 500, 502, 503, 504].includes(status) ||
+        message.includes("high demand") ||
+        message.includes("service unavailable") ||
+        message.includes("temporarily unavailable") ||
+        message.includes("resource exhausted")
+    );
+}
+
+// Retry temporary Gemini failures up to 3 attempts.
+async function generateWithRetry(ai, contents) {
+    const delays = [1000, 2500];
+
+    for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+            return await ai.models.generateContent({
+                model: process.env.GEMINI_MODEL || "gemini-2.5-flash",
+                contents,
+                config: {
+                    systemInstruction:
+                        "You are OREA, a helpful, clear, friendly AI assistant. Help with learning, creativity, coding, and productivity. Be honest when uncertain."
+                }
+            });
+        } catch (error) {
+            const lastAttempt = attempt === 2;
+
+            if (lastAttempt || !isRetryable(error)) {
+                throw error;
+            }
+
+            const delay = delays[attempt];
+
+            console.warn(
+                `Gemini temporary error. Retry ${attempt + 1}/2 in ${delay}ms.`
+            );
+
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+    }
+
+    throw new Error("Gemini request failed after retries.");
 }
 
 app.get("/api/health", (_req, res) => {
@@ -72,7 +127,7 @@ app.get("/api/health", (_req, res) => {
     });
 });
 
-// AI chat requires a verified Firebase user.
+// AI chat endpoint.
 app.post("/api/chat", requireAuth, async (req, res) => {
     try {
         const message = req.body?.message;
@@ -92,7 +147,7 @@ app.post("/api/chat", requireAuth, async (req, res) => {
 
         if (!process.env.GEMINI_API_KEY) {
             return res.status(503).json({
-                error: "Gemini isn't configured. Please check the server configuration."
+                error: "OREA AI is not configured yet. Please try again later."
             });
         }
 
@@ -126,36 +181,43 @@ app.post("/api/chat", requireAuth, async (req, res) => {
             apiKey: process.env.GEMINI_API_KEY
         });
 
-        const result = await ai.models.generateContent({
-            model: process.env.GEMINI_MODEL || "gemini-2.5-flash",
-            contents,
-            config: {
-                systemInstruction:
-                    "You are OREA, a helpful, clear, friendly AI assistant. Help with learning, creativity, coding, and productivity. Be honest when uncertain."
-            }
-        });
-
+        const result = await generateWithRetry(ai, contents);
         const reply = result.text?.trim();
 
         if (!reply) {
             return res.status(502).json({
-                error: "Gemini returned an empty response. Please try again."
+                error: "OREA received an empty response. Please try again."
             });
         }
 
         return res.json({ reply });
     } catch (error) {
-        console.error("Gemini request failed:", error?.message || error);
+        const status = Number(
+            error?.status ??
+            error?.statusCode ??
+            error?.response?.status
+        );
 
-        if (error?.status === 401 || error?.status === 403) {
+        console.error(
+            "Gemini request failed:",
+            error?.message || error
+        );
+
+        if (status === 401 || status === 403) {
             return res.status(502).json({
-                error: "Gemini rejected the API key or its permissions."
+                error: "Gemini rejected the API key or its permissions. Please check the server configuration."
             });
         }
 
-        if (error?.status === 429) {
+        if (status === 429) {
             return res.status(429).json({
-                error: "Gemini rate limit or quota reached. Please try again later."
+                error: "Gemini is busy or your usage limit has been reached. Please wait a little and try again."
+            });
+        }
+
+        if (isRetryable(error)) {
+            return res.status(503).json({
+                error: "OREA AI is receiving too many requests right now. Please wait a moment and try again."
             });
         }
 
