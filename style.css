@@ -1124,3 +1124,84 @@ button[type="submit"] {
         padding: 16px;
     }
 }
+/* OREA AI — Compact Sidebar Account */
+
+.sidebar-account {
+    margin: 18px 12px 12px;
+    padding: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 16px;
+    background: rgba(255, 255, 255, 0.035);
+}
+
+.sidebar-account-heading {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+.sidebar-account .account-avatar {
+    flex-shrink: 0;
+}
+
+.sidebar-account-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    min-width: 0;
+}
+
+.sidebar-account-info strong {
+    color: #f5f3ff;
+    font-size: 13px;
+}
+
+.sidebar-account-info #auth-status {
+    margin: 0;
+    color: #a5a0bb;
+    font-size: 11px;
+    overflow-wrap: anywhere;
+}
+
+.sidebar-account-actions {
+    display: grid;
+    gap: 7px;
+}
+
+.sidebar-account-actions input {
+    box-sizing: border-box;
+    width: 100%;
+    min-width: 0;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+    color: #fff;
+    font-size: 12px;
+}
+
+.sidebar-account-actions button {
+    width: 100%;
+    padding: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.04);
+    color: #e9e5f5;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.sidebar-account-actions button:hover {
+    background: rgba(167, 139, 250, 0.12);
+    border-color: rgba(167, 139, 250, 0.3);
+}
+
+.sidebar-account-actions #google-btn {
+    background: rgba(139, 92, 246, 0.12);
+}
+
+/* Remove the old floating account-menu layout */
+#account-menu {
+    display: none !important;
+}
