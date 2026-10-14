@@ -948,3 +948,179 @@ button[type="submit"] {
         box-sizing: border-box;
     }
 }
+/* OREA AI — Premium Account Menu */
+
+#account-menu {
+    position: fixed;
+    top: 16px;
+    right: 18px;
+    z-index: 1000;
+    width: min(340px, calc(100vw - 36px));
+    font-family: inherit;
+}
+
+#account-menu-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: fit-content;
+    max-width: 100%;
+    margin-left: auto;
+    padding: 8px 13px 8px 8px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 30px;
+    background: rgba(24,20,42,0.76);
+    color: #f5f3ff;
+    cursor: pointer;
+    list-style: none;
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.22);
+}
+
+#account-menu-toggle::-webkit-details-marker {
+    display: none;
+}
+
+.account-avatar {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    color: white;
+    font-weight: 700;
+    background: linear-gradient(135deg,#8b5cf6,#6366f1);
+    box-shadow: 0 0 20px rgba(139,92,246,0.28);
+}
+
+.account-menu-label {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.account-chevron {
+    color: #b9a8f8;
+    font-size: 18px;
+}
+
+#account-panel {
+    display: block !important;
+    margin-top: 12px;
+    padding: 20px;
+    border: 1px solid rgba(255,255,255,0.12);
+    border-radius: 22px;
+    background: rgba(18,15,32,0.96) !important;
+    color: #f5f3ff;
+    box-shadow: 0 20px 65px rgba(0,0,0,0.4);
+    backdrop-filter: blur(28px);
+    -webkit-backdrop-filter: blur(28px);
+}
+
+.account-panel-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.account-eyebrow {
+    color: #a78bfa;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.account-panel-heading h3 {
+    margin: 5px 0 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.account-status-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #a78bfa;
+    box-shadow: 0 0 14px rgba(167,139,250,0.65);
+}
+
+#auth-status {
+    margin: 0 0 14px;
+    color: #b8b1ca;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
+.account-fields {
+    display: grid;
+    gap: 10px;
+}
+
+#account-panel input {
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none !important;
+    min-width: 0;
+    padding: 12px 13px !important;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px !important;
+    outline: none;
+    background: rgba(255,255,255,0.045);
+    color: #fff;
+    font: inherit;
+    font-size: 13px;
+}
+
+#account-panel input:focus {
+    border-color: rgba(167,139,250,0.65);
+}
+
+#account-panel input::placeholder {
+    color: #938ba9;
+}
+
+.account-actions {
+    display: grid;
+    gap: 8px;
+    margin-top: 14px;
+}
+
+.account-actions button {
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    background: rgba(255,255,255,0.055);
+    color: #f5f3ff;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+    transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.account-actions button:hover {
+    background: rgba(167,139,250,0.14);
+    border-color: rgba(167,139,250,0.4);
+}
+
+#google-btn {
+    background: linear-gradient(
+        135deg,
+        rgba(139,92,246,0.24),
+        rgba(99,102,241,0.18)
+    );
+    border-color: rgba(167,139,250,0.28);
+}
+
+@media (max-width: 480px) {
+    #account-menu {
+        top: 10px;
+        right: 10px;
+        width: min(320px, calc(100vw - 20px));
+    }
+
+    #account-panel {
+        padding: 16px;
+    }
+}
