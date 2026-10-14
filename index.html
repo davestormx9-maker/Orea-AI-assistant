@@ -64,6 +64,41 @@
             <button onclick="showFeature('OREA Pro', 'This is a demo upgrade screen. Connect a real payment and account system to offer paid plans.')">Explore OREA</button>
         </div>
     </div>
+    <!-- OREA AI Account Section -->
+<div class="sidebar-account">
+    <div class="sidebar-account-heading">
+        <span class="account-avatar">O</span>
+        <div class="sidebar-account-info">
+            <strong>OREA Account</strong>
+            <span id="auth-status" role="status" aria-live="polite">
+                Checking account...
+            </span>
+        </div>
+    </div>
+    <div class="sidebar-account-actions">
+        <input
+            id="auth-email"
+            type="email"
+            placeholder="Email address"
+            autocomplete="email"
+            aria-label="Email address"
+        >
+
+        <input
+            id="auth-password"
+            type="password"
+            placeholder="Password"
+            autocomplete="current-password"
+            aria-label="Password"
+        >
+
+        <button type="button" id="login-btn">Log in</button>
+        <button type="button" id="register-btn">Create account</button>
+        <button type="button" id="google-btn">Continue with Google</button>
+        <button type="button" id="reset-password-btn">Reset password</button>
+        <button type="button" id="logout-btn">Log out</button>
+    </div>
+</div>
 </aside>
 
 <!-- Main application -->
@@ -72,54 +107,7 @@
 
     <!-- OREA AI account controls -->
 <!-- OREA AI Premium Account Menu -->
-<details id="account-menu">
-    <summary id="account-menu-toggle">
-        <span class="account-avatar">O</span>
-        <span class="account-menu-label">Your Account</span>
-        <span class="account-chevron">⌄</span>
-    </summary>
 
-    <section id="account-panel">
-        <div class="account-panel-heading">
-            <div>
-                <span class="account-eyebrow">OREA AI</span>
-                <h3>Your Account</h3>
-            </div>
-
-            <span class="account-status-dot"></span>
-        </div>
-
-        <p id="auth-status" role="status" aria-live="polite">
-            Checking account...
-        </p>
-
-        <div class="account-fields">
-            <input
-                id="auth-email"
-                type="email"
-                placeholder="Email address"
-                autocomplete="email"
-                aria-label="Email address"
-            >
-
-            <input
-                id="auth-password"
-                type="password"
-                placeholder="Password"
-                autocomplete="current-password"
-                aria-label="Password"
-            >
-        </div>
-
-        <div class="account-actions">
-            <button type="button" id="login-btn">Log in</button>
-            <button type="button" id="register-btn">Create account</button>
-            <button type="button" id="google-btn">Continue with Google</button>
-            <button type="button" id="reset-password-btn">Reset password</button>
-            <button type="button" id="logout-btn">Log out</button>
-        </div>
-    </section>
-</details>
 
     <header class="topbar">
         <div style="display:flex;align-items:center;gap:12px">
